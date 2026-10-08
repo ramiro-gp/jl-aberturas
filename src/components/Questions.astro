@@ -1,0 +1,16 @@
+---
+import { Plus } from '@lucide/astro';
+import { questions } from '../config/content';
+---
+<section class="questions section-pad" aria-labelledby="questions-title">
+  <div class="questions-intro" data-reveal>
+    <p class="eyebrow section-index">Para dar el próximo paso</p>
+    <h2 id="questions-title">Antes de pedir<br /><span>presupuesto.</span></h2>
+  </div>
+  <div class="questions-list">
+    {questions.map(item => <details class="question">
+      <summary><h3>{item.question}</h3><Plus size={18} aria-hidden="true" /></summary>
+      <p>{item.answer}</p>
+    </details>)}
+  </div>
+</section>

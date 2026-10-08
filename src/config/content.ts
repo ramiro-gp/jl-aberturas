@@ -23,7 +23,7 @@ export const copy = {
     headingFirst: "Aberturas para",
     headingSecond: "cada espacio.",
     intro:
-      "Para construir, renovar o conectar ambientes. Encontrá el punto de partida para tu proyecto.",
+      "Fabricamos y vendemos aberturas a medida para viviendas y obras. Te asesoramos en la elección y coordinamos la instalación en CABA y GBA.",
     customHeading: "Aberturas a medida",
     customDescription:
       "Cada espacio tiene sus medidas. Contanos tu idea y definimos juntos la abertura que necesitás.",
@@ -46,7 +46,7 @@ export const copy = {
 export const products = [
   {
     name: "Ventanales",
-    description: "Más conexión entre tus ambientes y el exterior.",
+    description: "Ventanales a medida para conectar tus ambientes con el exterior. Evaluamos las medidas, la línea y el vidrio para tu proyecto.",
     image: ventanales,
     alt: "Ventanales de referencia que conectan un ambiente con el exterior.",
     className: "product-large",
@@ -54,7 +54,7 @@ export const products = [
   },
   {
     name: "Ventanas",
-    description: "Una abertura pensada para cada ambiente.",
+    description: "Ventanas a medida para construir o renovar. Te asesoramos sobre las líneas Módena y A30 NEW y las opciones de vidrio.",
     image: ventanas,
     alt: "Ventanas de referencia en un ambiente iluminado por luz natural.",
     className: "product-small",
@@ -62,7 +62,7 @@ export const products = [
   },
   {
     name: "Puertas corredizas",
-    description: "Abrí el paso entre un espacio y otro.",
+    description: "Puertas corredizas a medida para comunicar ambientes y patios. Consultanos por fabricación, venta y colocación.",
     image: corredizas,
     alt: "Puertas corredizas de referencia que conectan un ambiente con un patio.",
     className: "product-wide",
@@ -70,7 +70,7 @@ export const products = [
   },
   {
     name: "Mamparas de baño",
-    description: "Una división de vidrio para el espacio de ducha.",
+    description: "Mamparas de baño para delimitar el espacio de ducha. Compartinos las medidas o una foto para evaluar tu consulta.",
     image: mamparas,
     alt: "Imagen ilustrativa de una mampara de baño de vidrio.",
     className: "product-small",
@@ -78,7 +78,7 @@ export const products = [
   },
   {
     name: "Techos de vidrio",
-    description: "Más luz natural para proyectos que la incorporan desde arriba.",
+    description: "Techos de vidrio para incorporar luz desde arriba. Contanos cómo es el espacio y evaluamos la propuesta para tu proyecto.",
     image: techosVidrio,
     alt: "Imagen ilustrativa de un atrio con cubierta de vidrio y estructura visible.",
     className: "product-roof",
@@ -122,3 +122,22 @@ export const productLines = [
 
 export const glassTypes = ["Vidrio float", "Vidrio DVH", "Vidrio laminado"] as const;
 export const accessories = ["Mosquiteros", "Premarcos", "Tapajuntas"] as const;
+
+export const questions = [
+  {
+    question: '¿En qué zonas trabajan?',
+    answer: 'Nuestra fábrica está en Pastoriza 1765, Rafael Calzada. Trabajamos en CABA, Zona Sur, Zona Oeste y Zona Norte.',
+  },
+  {
+    question: '¿La medición a domicilio tiene costo?',
+    answer: 'La medición a domicilio es sin cargo en CABA y GBA. Consultanos por WhatsApp para coordinarla.',
+  },
+  {
+    question: '¿Qué significa colocación en el día?',
+    answer: 'Coordinamos una fecha para colocar tu abertura en el día. El plazo de fabricación se acuerda al consultar y es distinto del tiempo de colocación.',
+  },
+  {
+    question: '¿Qué necesito para pedir presupuesto?',
+    answer: 'Podés enviarnos tu idea, una foto del espacio o medidas aproximadas por WhatsApp. Después evaluamos las medidas, la línea y el tipo de vidrio.',
+  },
+] as const;

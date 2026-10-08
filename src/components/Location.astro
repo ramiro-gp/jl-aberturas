@@ -14,6 +14,7 @@ import { site, map } from '../config/site';
     <div class="location-map">
       <iframe src={map.embedUrl} title={`Ubicación de JL Aberturas: ${site.address.streetAddress}, ${site.address.addressLocality}`} width="960" height="720" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       <p class="map-caption">{site.address.streetAddress} · {site.address.addressLocality}<a href={map.directionsUrl} target="_blank" rel="noopener noreferrer">Abrir en Google Maps <ArrowUpRight size={14} aria-hidden="true" /></a></p>
+      <a class="text-link google-profile-link" href={site.googleBusinessProfileUrl} target="_blank" rel="noopener noreferrer">Ver perfil del negocio en Google <ArrowUpRight size={16} aria-hidden="true" /></a>
     </div>
   </div>
 </section>

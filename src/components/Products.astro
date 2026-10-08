@@ -13,7 +13,7 @@ import ProductOptions from './ProductOptions.astro';
     {products.map((product, index) => (
       <article class:list={['product', product.className]} data-reveal>
         <div class="product-photo">
-          <Picture src={product.image} alt={product.alt} widths={product.className === 'product-large' ? [480, 800, 1200] : [400, 640, 960]} sizes={product.className === 'product-large' ? '(min-width: 768px) 55vw, 92vw' : '(min-width: 768px) 38vw, 92vw'} formats={['avif', 'webp']} quality={72} loading="lazy" decoding="async" style={`object-position: ${product.position}`} />
+          <Picture src={product.image} alt={product.alt} widths={product.className === 'product-large' ? [480, 800, 1200] : [400, 640, 960]} sizes={product.className === 'product-large' ? '(min-width: 768px) 55vw, 92vw' : '(min-width: 768px) 38vw, 92vw'} formats={['avif', 'webp']} fallbackFormat="jpg" quality={72} loading="lazy" decoding="async" style={`object-position: ${product.position}`} />
           <span class="photo-index" aria-hidden="true">0{index + 1}</span>
           <span class="photo-corner" aria-hidden="true"></span>
         </div>

@@ -4,6 +4,8 @@ import { chromium, firefox, webkit } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
 const url = process.env.QA_URL || "http://127.0.0.1:4321/";
+const official = process.env.QA_MODE === 'production';
+const expectedOrigin = official ? 'https://jlaberturas.com.ar' : 'https://jl-aberturas.vercel.app';
 const results = [];
 const browserNames = (
   process.env.QA_BROWSERS || "chromium,firefox,webkit"
@@ -87,13 +89,25 @@ for (const name of browserNames) {
       assert.equal(await page.locator("html").getAttribute("lang"), "es-AR");
       assert.equal(
         await page.locator("meta[name=robots]").getAttribute("content"),
-        "noindex,follow",
+        official ? "index,follow" : "noindex,follow",
       );
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), `${expectedOrigin}/`);
+      assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), `${expectedOrigin}/og.png`);
+      assert.equal(await page.locator('script[src*="googletagmanager"]').count(), 0);
+      assert.equal(await page.locator('.question').count(), 4);
+      if (width < 1024) {
+        assert.equal(actual.revealOpacity, 1, 'Mobile/tablet: texto visible desde el inicio');
+        const cta = await page.locator('.hero-reveal a').boundingBox();
+        assert(cta.y >= 0 && cta.y + cta.height <= height, `${name} ${width}: CTA fuera del primer viewport`);
+        assert(cta.y + cta.height <= frame.y, 'CTA debe preceder a la ventana');
+        assert.equal(await page.locator('.hero-reveal').evaluate(el => getComputedStyle(el).pointerEvents), 'auto');
+      }
       const hrefs = await page
         .locator('a[href^="https://wa.me/"]')
         .evaluateAll((links) => links.map((link) => link.href));
       assert(hrefs.length >= 3);
       assert.equal(new Set(hrefs).size, 1);
+      assert.deepEqual(await page.locator('a[href^="https://wa.me/"]').evaluateAll(links => links.map(link => link.dataset.whatsappPlacement).sort()), ['contact', 'footer', 'header', 'hero', 'menu']);
       const contact = new URL(hrefs[0]);
       assert.equal(contact.pathname, "/5491141695236");
       assert.equal(
@@ -108,14 +122,16 @@ for (const name of browserNames) {
       assert.equal(data.address.streetAddress, 'Pastoriza 1765');
       assert.equal(data.address.addressLocality, 'Rafael Calzada');
       assert.deepEqual(data.areaServed, ['CABA', 'Zona Sur', 'Zona Oeste', 'Zona Norte']);
-      assert.deepEqual(data.sameAs, ['https://www.instagram.com/jl.aberturas/', 'https://www.facebook.com/jl.aberturass']);
+      assert.deepEqual(data.sameAs, ['https://www.instagram.com/jl.aberturas/', 'https://www.facebook.com/jl.aberturass', 'https://share.google/Kp1DXKrPlq93V9DPx']);
+      assert.equal(data.logo.url, `${expectedOrigin}/logo.png`);
+      assert.equal(await page.locator('.google-profile-link').getAttribute('href'), 'https://share.google/Kp1DXKrPlq93V9DPx');
       assert.equal('geo' in data, false);
       assert.equal('openingHours' in data, false);
       assert.equal(await page.locator('.location-map iframe').getAttribute('loading'), 'lazy');
       assert((await page.locator('.location-map iframe').getAttribute('src')).includes('Pastoriza%201765'));
       assert.equal(await page.locator('.line-item').count(), 2);
       assert.equal(await page.locator('.options-bottom .option-names').nth(1).locator('li').first().textContent(), 'Mosquiteros');
-      assert.equal(await page.locator('.gallery-item').count(), 3);
+      assert.equal(await page.locator('.gallery-item').count(), 5);
       await page.screenshot({
         path: `qa/artifacts/${name}-${width}-closed.png`,
       });
@@ -136,6 +152,12 @@ for (const name of browserNames) {
         actual = await state(page);
         assert(actual.translate > actual.leafWidth * 0.98);
         assert(actual.revealOpacity > 0.98);
+        if (width < 1024) {
+          assert.equal(await page.locator('.window-brand').evaluate(el => Number(getComputedStyle(el).opacity)), 1);
+          const brand = await page.locator('.window-brand').boundingBox();
+          const opening = await page.locator('.window-shell').boundingBox();
+          assert(brand.x >= opening.x && brand.x + brand.width <= opening.x + opening.width / 2 + 2);
+        }
         assert(
           actual.revealBottom <= actual.footerTop + 1,
           `${name} ${width}: contenido del hero se superpone al pie`,
@@ -209,6 +231,12 @@ for (const name of browserNames) {
       // All below-fold copy is audited, including text which motion initially reveals.
       await page.emulateMedia({ reducedMotion: "reduce" });
       await settle(page);
+      const question = page.locator('.question').first();
+      await question.locator('summary').focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await question.getAttribute('open'), '');
+      await page.keyboard.press('Enter');
+      assert.equal(await question.getAttribute('open'), null);
       const axe = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
         .analyze();
@@ -290,7 +318,7 @@ for (const name of browserNames) {
   }
 }
 await fs.writeFile(
-  "qa/artifacts/browser-results.json",
+  `qa/artifacts/browser-results-${official ? 'official' : 'demo'}.json`,
   JSON.stringify(results, null, 2),
 );
 console.log(`${results.length} escenarios pasaron.`);

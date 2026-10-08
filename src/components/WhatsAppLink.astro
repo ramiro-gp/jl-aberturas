@@ -1,9 +1,10 @@
 ---
 import { ArrowUpRight } from '@lucide/astro';
 import { getWhatsAppHref } from '../config/site';
-interface Props { label?: string; variant?: 'primary' | 'header' | 'large'; }
-const { label = 'Pedir presupuesto', variant = 'primary' } = Astro.props;
+import type { WhatsAppPlacement } from '../config/measurement';
+interface Props { label?: string; variant?: 'primary' | 'header' | 'large'; placement: WhatsAppPlacement; }
+const { label = 'Pedir presupuesto', variant = 'primary', placement } = Astro.props;
 ---
-<a href={getWhatsAppHref()} class:list={['whatsapp-link', `whatsapp-${variant}`]}>
+<a href={getWhatsAppHref()} data-whatsapp-placement={placement} class:list={['whatsapp-link', `whatsapp-${variant}`]}>
   <span>{label}</span><ArrowUpRight size={20} aria-hidden="true" />
 </a>

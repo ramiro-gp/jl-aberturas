@@ -17,6 +17,7 @@ Las tres primeras fotografías se consultaron y descargaron el 7 de octubre de 2
 - **Libre Franklin:** archivo latino variable normal, 29.292 bytes, desde `@fontsource-variable/libre-franklin`. [Proyecto y licencia SIL OFL 1.1](https://github.com/googlefonts/Libre-Franklin). No se solicitan fuentes a Google.
 - **Lucide:** SVG renderizado por `@lucide/astro`; [licencia](https://lucide.dev/license). No se utilizan sus iconos como logo de WhatsApp.
 - **Logo de header y footer:** suministrado por el cliente a través de una imagen de WhatsApp. PNG preparado con `imagegen`: recorte al círculo y transparencia exterior, conservando el interior blanco, el monograma, el nombre y el teléfono. Archivo: `src/assets/brand/logo-jl-aberturas.png` (1024 × 1024). Astro genera versiones WebP pequeñas para cada ubicación, con alpha y dimensiones reservadas.
-- **Hero, dibujos, favicon e imagen social:** construidos para esta demo con HTML/CSS/SVG. El favicon de marco y la composición social siguen siendo recursos de la demo.
+- **Favicon, icono de inicio y logo público:** `public/favicon.png` (96px), `public/apple-touch-icon.png` (180px) y `public/logo.png` (512px), optimizados con Sharp a partir del PNG oficial sin redibujar la identidad ni quitar el blanco interior.
+- **Hero y dibujos:** construidos con HTML/CSS/SVG. La imagen social `public/og.png` (1200 × 630) incorpora el logo oficial; se renderiza con la fuente local desde `scripts/og-source.svg`. `pnpm og` regenera estos recursos.
 
 Para sustituir imágenes: colocar las fotografías autorizadas en `src/assets/products`, actualizar imports/alt/encuadre en `src/config/content.ts`, y reconstruir. No retirar la leyenda hasta que todas las fotos representen contenido real autorizado.

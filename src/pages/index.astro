@@ -9,6 +9,7 @@ import Process from '../components/Process.astro';
 import Gallery from '../components/Gallery.astro';
 import Location from '../components/Location.astro';
 import WhatsAppLink from '../components/WhatsAppLink.astro';
+import Questions from '../components/Questions.astro';
 import { copy, navigation } from '../config/content';
 import { site, getWhatsAppHref } from '../config/site';
 ---
@@ -28,14 +29,15 @@ import { site, getWhatsAppHref } from '../config/site';
     <Process />
     <Gallery />
     <Location />
+    <Questions />
     <section id="contacto" class="contact section-pad" aria-labelledby="contact-title">
       <p class="eyebrow section-index" data-reveal><span>06</span> / Hablemos de tu proyecto</p>
       <div class="contact-main" data-reveal><h2 id="contact-title">{copy.contact.headingFirst}<br />{copy.contact.headingSecond} <span>{copy.contact.headingLast}</span></h2><ArrowUpRight class="contact-arrow" size={112} stroke-width={1} aria-hidden="true" /></div>
-      <div class="contact-bottom" data-reveal><p>{copy.contact.description}</p><div class="contact-action"><WhatsAppLink label="Consultar por WhatsApp" variant="large" /><span>Atención directa · {site.displayPhone}</span></div></div>
+      <div class="contact-bottom" data-reveal><p>{copy.contact.description}</p><div class="contact-action"><WhatsAppLink label="Consultar por WhatsApp" variant="large" placement="contact" /><span>Atención directa · {site.displayPhone}</span></div></div>
     </section>
   </main>
   <footer class="site-footer">
-    <div class="footer-top"><BrandLogo variant="footer" /><nav aria-label="Navegación del pie">{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav><a class="text-link" href={getWhatsAppHref()}>WhatsApp <ArrowUpRight size={16} aria-hidden="true" /></a></div>
+    <div class="footer-top"><BrandLogo variant="footer" /><nav aria-label="Navegación del pie">{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav><a class="text-link" href={getWhatsAppHref()} data-whatsapp-placement="footer">WhatsApp <ArrowUpRight size={16} aria-hidden="true" /></a></div>
     <div class="footer-business"><address><a href="#ubicacion">{site.address.streetAddress} · {site.address.addressLocality}</a></address><div class="footer-socials" aria-label="Redes sociales">{site.socialProfiles.map(profile => <a class="text-link" href={profile.url} target="_blank" rel="noopener noreferrer">{profile.name}<ArrowUpRight size={14} aria-hidden="true" /></a>)}</div></div>
     <div class="footer-bottom">
       <span>© {new Date().getFullYear()} {site.businessName}</span>

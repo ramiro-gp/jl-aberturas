@@ -1,6 +1,6 @@
 # JL Aberturas
 
-Demo comercial estática con Astro, TypeScript, Tailwind CSS 4 y Lucide. El hero usa una corrediza de dos hojas, ligada al scroll nativo. No hay frontend framework hidratado, backend, formularios ni trackers propios. Fotografías, fuente e iconos se sirven localmente; el mapa de Google se carga de forma diferida al acercarse a Ubicación.
+Landing estática con Astro, TypeScript, Tailwind CSS 4 y Lucide, preparada para **https://jlaberturas.com.ar en Hostinger**. Vercel se usa exclusivamente como demo con `noindex`. El hero usa una corrediza ligada al scroll nativo. No hay framework hidratado, backend, formularios ni etiquetas de medición activas. Fotografías, fuente e iconos se sirven localmente; Google Maps se carga al acercarse a Ubicación.
 
 ## Ejecutar
 
@@ -23,21 +23,23 @@ La salida desplegable está en `dist/`. `pnpm build` crea una **demo con `noinde
 
 ## Editar
 
-- `src/config/site.ts`: nombre, WhatsApp, teléfono visible, mensaje, dirección, cobertura, redes y metadatos. El número lleva país, sin `+`, espacios ni guiones. Todos los CTA comparten el mismo helper. La dirección genera los enlaces del mapa.
+- `src/config/site.ts`: nombre, WhatsApp, teléfono visible, mensaje, dirección, cobertura, redes, perfil de Google y metadatos. El número lleva país, sin `+`, espacios ni guiones. Todos los CTA comparten el mismo helper. La dirección genera los enlaces del mapa.
+- `src/config/origins.mjs`: origen oficial y origen demo. El build oficial usa siempre el dominio aprobado, aunque el entorno de Vercel tenga otra URL. `PUBLIC_SITE_URL` solo modifica la URL de la demo.
+- `src/config/measurement.ts`: IDs públicos de GA4 y Ads, y activación. Mantener `enabled: false` hasta configurar cuentas, conversiones y revisar privacidad/consentimiento. Los CTA identifican `header`, `menu`, `hero`, `contact` y `footer`.
 - `src/config/content.ts`: navegación, títulos, textos, categorías, imágenes, alt y pasos.
 - `src/config/gallery.ts`: imágenes, captions, alt, proporciones y estado ilustrativo de la galería. Importar fotografías autorizadas desde `src/assets`, reemplazar las referencias y desactivar `illustrative` únicamente cuando toda la galería represente contenido real.
 - `src/styles/global.css`: paleta, tipografía, geometría y breakpoints. La fuente es local; su archivo latino se precarga una sola vez.
-- `public/og-source.svg`: composición social. Regenerar el PNG con `pnpm og` (requiere Chromium de Playwright; usa la misma fuente local del sitio).
+- `scripts/og-source.svg`: composición social con logo oficial. `pnpm og` optimiza favicons/logo y regenera `public/og.png` con la fuente local (requiere Chromium de Playwright). Estos assets ya están versionados.
 - [ASSETS.md](ASSETS.md): fuentes, licencias y reemplazo de fotografías.
 
 El skill `frontend-design` de Vercel está instalado en `.agents/skills/frontend-design`. Se utilizó el repositorio `vercel-labs/open-agents`, donde se verificó su ubicación.
 
 ## Hero y fallbacks
 
-- Desktop: sección de 170svh; tablet: 150svh; mobile: 135svh. La escena sticky mide 100svh.
-- La hoja se desliza del 10 al 75% del recorrido; texto y CTA aparecen del 45 al 85%.
+- Desktop: sección de 170svh; tablet: 150svh; mobile: 135svh. La escena sticky mide 100svh cuando hay espacio suficiente.
+- La hoja se desliza del 10 al 75% del recorrido. En desktop, texto y CTA aparecen del 45 al 85%. En mobile/tablet la descripción y “Pedir presupuesto” están antes de la ventana, visibles desde el primer render. La apertura revela “JL Aberturas” dentro del vano libre.
 - Solo se actualizan transforms/opacidad mediante variables CSS. El listener es pasivo y el rAF se solicita a demanda. No se interceptan wheel, touch ni teclas.
-- Ancho menor a 360px, altura menor a 640px y reduced motion: composición final sin sticky ni recorrido extra.
+- Ancho menor a 360px, altura menor a 640px, o mobile/tablet con altura menor a 740px: composición final sin sticky ni recorrido extra. Reduced motion también usa altura natural.
 - Sin JavaScript: la composición abierta usa altura natural mediante CSS en `noscript`.
 - Si JavaScript es bloqueado o falla la inicialización, los textos y enlaces quedan visibles. No se habilitan clases que los oculten antes de inicializar.
 - El foco sobre el contenido del hero lo revela inmediatamente. “Ver productos” permite saltar la escena.
@@ -61,26 +63,49 @@ pnpm build
 npx vercel deploy --prod --yes --scope ramiroariel-carp-hotmailcoms-projects
 ```
 
-El target Production de Vercel conserva **modo demo** porque ejecuta `pnpm build`. Para publicar como sitio oficial, confirmar el dominio y los datos del negocio, actualizar `PUBLIC_SITE_URL` y cambiar el `buildCommand` de `vercel.json` a `pnpm build:production`.
+El target Production de Vercel conserva **modo demo** porque ejecuta `pnpm build`. No convertir este proyecto de Vercel en el alojamiento comercial del cliente. `release/`, auditorías, fuentes de configuración de Hostinger y secretos quedan excluidos del upload.
 
 ## Pasar a sitio oficial
 
-Copiar `.env.example` a `.env` y completar `PUBLIC_SITE_URL` con el origen HTTPS real (sin ruta). En una demo pública esa variable también habilita canonical y URLs sociales absolutas.
+El dominio oficial está definido en `src/config/origins.mjs`. La inscripción está en trámite; publicar únicamente cuando el dominio, DNS y SSL estén operativos.
 
 ```sh
-pnpm build:production
+pnpm check
+pnpm build:hostinger
 ```
 
-El build oficial requiere la URL, retira `noindex` y la identificación de demo, y genera sitemap y su referencia en robots.txt. La leyenda de **imágenes ilustrativas se mantiene** mientras se utilicen fotografías referenciales.
+La salida oficial se genera en `release/hostinger/` y el paquete en **`release/jl-aberturas-hostinger.zip`**. `dist/` sigue siendo la demo. La salida retira `noindex` y la identificación de demo, genera canonical/metadatos para `https://jlaberturas.com.ar`, sitemap y robots. La leyenda de **imágenes ilustrativas se mantiene** mientras se utilicen fotografías referenciales.
+
+El ZIP contiene archivos directamente en su raíz, incluidos `.htaccess` y `_astro/.htaccess`. En Windows se comprime con .NET/PowerShell; Linux/macOS requieren `zip`. No se suben fuentes, `node_modules`, archivos `.env` ni herramientas de desarrollo. `pnpm build:production` es una alternativa sin ZIP que genera `release/production/`, también aislada.
+
+### Publicar en Hostinger
+
+1. Usar un sitio vacío en Hostinger Web/Cloud con acceso a `public_html`. Astro no requiere Node en el servidor.
+2. Configurar el dominio y `www` con los valores de DNS provistos por el plan de Hostinger, sin inventar IPs ni nameservers. Verificar SSL para ambos nombres.
+3. Respaldar el contenido existente de `public_html`, si lo hay, y subir/extraer el ZIP allí. `index.html`, `.htaccess` y `_astro/` deben quedar directamente dentro de `public_html`.
+4. Las reglas generadas redirigen HTTP y `www` hacia `https://jlaberturas.com.ar`, conservan rutas, comprimen texto, revalidan HTML y dan un año de caché a assets con hash. No hay reescritura SPA: rutas inexistentes responden 404 con `/404.html`.
+5. Revisar en el alojamiento real redirecciones, certificado, cabeceras, 404, recursos y WhatsApp. El servidor local de QA no ejecuta `.htaccess`.
+6. Verificar propiedad en Search Console, enviar `/sitemap-index.xml`, inspeccionar la URL e informar la web en el perfil de Google existente. Revisar inclusión en las funciones generativas y, cuando haya datos, informes de búsqueda. Bing Webmaster Tools puede complementar el seguimiento.
+
+Referencia: [File Manager de Hostinger](https://www.hostinger.com/support/4548688-basic-actions-in-the-file-manager-in-hostinger/).
 
 Pendientes de confirmar antes de publicación oficial:
 
-- Dominio final, identidad/logo y fotografías reales autorizadas.
+- Aprobación del dominio, DNS/SSL y acceso al alojamiento. El dominio y el logo ya están definidos.
+- Fotografías reales autorizadas; actualizar productos y galería sin presentar referencias como trabajos propios.
 - Provincia/código postal si se quieren completar, horarios y correo.
 - Marcas, garantías, plazos de fabricación y cualquier condición adicional que se quiera comunicar.
 - Copy de proceso y contacto aprobado por el negocio.
 
-El JSON-LD incluye nombre, actividad, teléfono, dirección confirmada, cobertura y ambas redes; también URL cuando existe. Dirección: Pastoriza 1765, Rafael Calzada. No se agregan coordenadas, código postal ni horarios sin confirmación. El mapa utiliza la dirección, sin una clave API ni coordenadas inventadas.
+El JSON-LD incluye entidad, nombre, actividad, teléfono, dirección confirmada, cobertura, logo, URL, ambas redes y el perfil de Google que el cliente identificó como propio (actualmente llamado “Aberturas”). No se agregan coordenadas, código postal, horarios ni reseñas sin confirmación. El mapa conserva Pastoriza 1765, Rafael Calzada. La administración del perfil es un servicio separado.
+
+El contenido comercial y las respuestas útiles están en HTML estático, con headings descriptivos y una identidad empresarial consistente. Esta preparación sigue las [recomendaciones de Google para funciones generativas](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide): contenido útil, acceso al rastreo y una base técnica clara. No se necesita un archivo especial para IA; la indexación y la aparición en respuestas se revisarán después de publicar, sin garantizar posiciones.
+
+### Medición preparada, desactivada
+
+`whatsapp_click` representa el clic y registra únicamente `cta_location`; no recoge mensajes, teléfonos de visitantes ni datos personales. La navegación nativa sigue inmediata. El adaptador permite GA4 y/o una conversión de Google Ads al disponer de IDs y etiquetas válidos. No marcar ese evento como venta ni asumir que confirma una conversación. Validar la medición, consentimiento y privacidad antes de activar. Las consultas efectivas y ventas requieren seguimiento comercial posterior.
+
+La configuración actual no descarga Google tag ni envía eventos. No se han creado cuentas ni campañas de Ads. Google Maps sigue siendo el servicio externo del mapa, independiente de esa configuración.
 
 La galería usa columnas CSS como base y `display: grid-lanes` como mejora donde esté disponible. Las proporciones están reservadas y las imágenes son responsive y lazy. No necesita JavaScript, carrusel ni librería masonry.
 
@@ -101,8 +126,17 @@ node qa/deployment.mjs
 
 `pnpm audit:lighthouse` ejecuta Lighthouse tres veces por perfil mobile/desktop y guarda reportes y medianas en `qa/artifacts/` (ignorado). Requiere Chrome instalado. Las fotografías se cargan bajo demanda; los bytes iniciales y totales dependen del viewport elegido.
 
-`qa/production.mjs` verifica el guard de dominio y genera una salida aislada con el dominio reservado `qa.invalid`, únicamente como fixture de prueba. No modifica la demo en `dist/`. No publicar ese fixture. `qa/metrics.mjs` registra tamaños comprimidos y solicitudes del sitio local.
+`qa/production.mjs` verifica el paquete de Hostinger ya generado: dominio oficial, separación de demo, entidad, logos, sitemap, robots, 404 y contenido del ZIP. `qa/metrics.mjs` registra tamaños comprimidos y solicitudes del sitio local.
+
+Para probar los builds separados, ejecutar en terminales distintas:
+
+```sh
+node qa/serve.mjs dist 4331
+node qa/serve.mjs release/hostinger 4332
+```
+
+Configurar `QA_URL=http://127.0.0.1:4332/` y `QA_MODE=production` para el oficial, o `QA_URL=http://127.0.0.1:4331/` y `QA_MODE=demo` para la demo. Los reportes Lighthouse se guardan separados en `qa/artifacts/official/` y `qa/artifacts/demo/`. Las pruebas incluyen CTA visible desde el inicio, marca en el vano, preguntas accesibles y etiquetas desactivadas.
 
 `qa/deployment.mjs` comprueba el sitio público de Vercel sin una sesión del propietario: acceso, assets, canonical, Open Graph, márgenes del hero y crédito del footer en mobile/desktop.
 
-Ver [QA.md](QA.md) para el resultado de esta entrega. `noindex` hace fallar deliberadamente el chequeo de indexación de Lighthouse; el canonical absoluto queda pendiente mientras no exista URL real. Las pruebas móviles son emuladas, no realizadas en teléfonos físicos.
+Ver [QA.md](QA.md) para los resultados. `noindex` hace fallar deliberadamente el chequeo SEO de la demo; el oficial tiene canonical absoluto y permite indexación. Las pruebas móviles son emuladas, no realizadas en teléfonos físicos. El código está versionado en Git con un snapshot anterior y la preparación oficial; todavía no hay un remoto configurado.

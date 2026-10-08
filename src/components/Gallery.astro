@@ -13,7 +13,7 @@ const instagram = site.socialProfiles.find(profile => profile.name === 'Instagra
   <div class="gallery-layout">
     {gallery.images.map((item, index) => <figure class="gallery-item" data-reveal>
       <div class="gallery-photo" style={`aspect-ratio: ${item.ratio}`}>
-        <Picture src={item.image} widths={[400, 640, 960]} sizes="(min-width: 1024px) 30vw, (min-width: 600px) 46vw, 92vw" formats={['avif', 'webp']} quality={72} loading="lazy" decoding="async" alt={item.alt} style={`object-position: ${item.position}`} />
+        <Picture src={item.image} widths={[400, 640, 960]} sizes="(min-width: 1024px) 30vw, (min-width: 600px) 46vw, 92vw" formats={['avif', 'webp']} fallbackFormat="jpg" quality={72} loading="lazy" decoding="async" alt={item.alt} style={`object-position: ${item.position}`} />
       </div>
       <figcaption><span aria-hidden="true">0{index + 1}</span>{item.caption}</figcaption>
     </figure>)}

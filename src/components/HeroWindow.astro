@@ -13,6 +13,11 @@ import WhatsAppLink from './WhatsAppLink.astro';
       </div>
     </div>
     <div class="window-composition">
+      <div class="hero-reveal">
+        <span class="eyebrow reveal-label">Tu próximo proyecto empieza acá</span>
+        <p>{copy.hero.description}</p>
+        <WhatsAppLink placement="hero" />
+      </div>
       <div class="window-shell" aria-hidden="true">
         <div class="window-view">
           <svg class="architectural-view" viewBox="0 0 1400 580" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -34,15 +39,11 @@ import WhatsAppLink from './WhatsAppLink.astro';
             <path fill="#858e74" d="M1119 310c-37-27-45-64-31-82 29 12 39 48 37 78 4-45 15-83 36-88 12 28-9 67-30 89 25-26 45-32 55-25-8 24-29 34-56 32z"/>
             <path fill="#847f6f" d="M1146 367h-43l7 27h29z"/>
           </svg>
+          <span class="window-brand"><span>JL</span><span>Aberturas</span></span>
         </div>
         <div class="window-leaf leaf-fixed"><span class="leaf-handle"></span><span class="glass-reflection"></span></div>
         <div class="window-leaf leaf-moving"><span class="leaf-handle"></span><span class="glass-reflection"></span></div>
         <div class="window-track"></div>
-      </div>
-      <div class="hero-reveal">
-        <span class="eyebrow reveal-label">Tu próximo proyecto empieza acá</span>
-        <p>{copy.hero.description}</p>
-        <WhatsAppLink />
       </div>
       <span class="window-caption" aria-hidden="true">Diseñada para abrir posibilidades <MoveRight size={22} /></span>
     </div>

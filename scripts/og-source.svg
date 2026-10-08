@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f2eb"/>
+  <image href="__LOGO_DATA_URI__" x="60" y="38" width="128" height="128"/>
+  <g fill="#252925" font-family="Libre Franklin, sans-serif">
+    <text x="218" y="91" font-size="30" font-weight="600">JL Aberturas</text>
+    <text x="218" y="125" font-size="17">Fábrica directa en Rafael Calzada</text>
+    <text x="60" y="274" font-size="62" font-weight="600">Aberturas a medida</text>
+    <text x="60" y="350" font-size="62" font-weight="350" fill="#805338">para tu espacio.</text>
+    <text x="60" y="506" font-size="20">Fabricación, venta e instalación</text>
+    <text x="60" y="547" font-size="17">Pastoriza 1765 · Rafael Calzada</text>
+    <text x="60" y="580" font-size="17" fill="#805338">Medición sin cargo en CABA y GBA</text>
+  </g>
+  <path stroke="#805338" stroke-width="2" d="M60 414h630"/>
+  <rect x="800" y="210" width="340" height="365" fill="#e8e3d5" stroke="#252925" stroke-width="9"/>
+  <rect x="974" y="217" width="158" height="349" fill="#b5c5bf" stroke="#252925" stroke-width="7"/>
+  <path stroke="#252925" stroke-width="5" d="M1118 353v50"/>
+  <path stroke="#f5f2eb" stroke-opacity=".4" stroke-width="19" d="m1080 220-90 345"/>
+</svg>

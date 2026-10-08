@@ -1,0 +1,5 @@
+# Astro names in _astro contain a content hash. Public non-versioned files use
+# the shorter policy defined at the root.
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>

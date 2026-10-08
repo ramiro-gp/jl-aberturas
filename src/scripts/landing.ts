@@ -5,7 +5,7 @@ function initHero() {
   const scene = hero?.querySelector<HTMLElement>(".hero-scene");
   if (!hero || !scene) return;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const compact = matchMedia("(max-width: 359px), (max-height: 639px)");
+  const compact = matchMedia("(max-width: 359px), (max-height: 639px), (max-width: 1023px) and (max-height: 739px)");
   let start = 0;
   let travel = 0;
   let pending = false;

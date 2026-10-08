@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BrandLogo from '../components/BrandLogo.astro';
+import { ArrowUpRight } from '@lucide/astro';
+---
+<BaseLayout title="Página no encontrada | JL Aberturas" indexable={false} includeBusiness={false} includeCanonical={false} enhance={false}>
+  <main id="contenido" class="error-page" tabindex="-1">
+    <BrandLogo href="/" />
+    <p class="eyebrow">404 / Página no encontrada</p>
+    <h1>Por acá no hay<br /><span>una abertura.</span></h1>
+    <p>La página que buscás no está disponible. Volvé al inicio para ver nuestros productos y contactarnos.</p>
+    <a class="whatsapp-link" href="/">Volver al inicio <ArrowUpRight size={20} aria-hidden="true" /></a>
+  </main>
+</BaseLayout>

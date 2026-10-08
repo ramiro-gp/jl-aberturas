@@ -17,6 +17,7 @@ export const site = {
   serviceArea: ["CABA", "Zona Sur", "Zona Oeste", "Zona Norte"],
   openingHours: null,
   email: null,
+  googleBusinessProfileUrl: 'https://share.google/Kp1DXKrPlq93V9DPx',
   socialProfiles: [
     { name: "Instagram", url: "https://www.instagram.com/jl.aberturas/" },
     { name: "Facebook", url: "https://www.facebook.com/jl.aberturass" },

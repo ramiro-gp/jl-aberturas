@@ -28,11 +28,18 @@ try {
     assert.equal(await page.locator('meta[name=robots]').getAttribute('content'), 'noindex,follow');
     assert.equal(await page.locator('.footer-credit a').getAttribute('href'), 'https://ramita.dev');
     assert.equal(await page.locator('.footer-socials a').count(), 2);
+    assert.equal(await page.locator('.google-profile-link').getAttribute('href'), 'https://share.google/Kp1DXKrPlq93V9DPx');
+    assert.equal(await page.locator('.question').count(), 4);
     const entity = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
     assert.equal(entity.address.streetAddress, 'Pastoriza 1765');
     assert.equal(entity.address.addressLocality, 'Rafael Calzada');
-    assert.equal(entity.sameAs.length, 2);
+    assert.equal(entity.sameAs.length, 3);
     assert.equal(await page.locator('.location-map iframe').getAttribute('loading'), 'lazy');
+    if(viewport.width < 1024) {
+      assert.equal(await page.locator('.hero-reveal').evaluate(el=>Number(getComputedStyle(el).opacity)), 1);
+      const cta=await page.locator('.hero-reveal a').boundingBox();
+      assert(cta.y+cta.height<=viewport.height, 'WhatsApp visible desde el inicio');
+    }
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     const frame = await page.locator('.window-shell').boundingBox();
     assert(Math.abs(frame.x - (viewport.width - frame.x - frame.width)) < 2);

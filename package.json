@@ -9,10 +9,11 @@
     "check": "astro check",
     "build": "astro build",
     "build:production": "node scripts/build-production.mjs",
+    "build:hostinger": "node scripts/build-hostinger.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "qa": "node qa/verify.mjs",
     "audit:lighthouse": "node qa/lighthouse.mjs",
-    "og": "node scripts/generate-og.mjs"
+    "og": "node scripts/generate-brand-assets.mjs && node scripts/generate-og.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

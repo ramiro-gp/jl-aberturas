@@ -6,6 +6,4 @@ dist/
 !.env.example
 qa/artifacts/
 .vercel/
-
-.vercel
-.env*
+release/

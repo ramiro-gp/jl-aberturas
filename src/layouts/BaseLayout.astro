@@ -2,19 +2,22 @@
 import { site } from '../config/site';
 import fontUrl from '@fontsource-variable/libre-franklin/files/libre-franklin-latin-wght-normal.woff2?url';
 import '../styles/global.css';
-const canonical = Astro.site ? new URL('/', Astro.site).href : undefined;
+interface Props { title?: string; indexable?: boolean; includeBusiness?: boolean; includeCanonical?: boolean; enhance?: boolean; }
+const { title: customTitle, indexable = site.production, includeBusiness = true, includeCanonical = true, enhance = true } = Astro.props;
+const canonical = includeCanonical && Astro.site ? new URL('/', Astro.site).href : undefined;
 const socialImage = Astro.site ? new URL('/og.png', Astro.site).href : '/og.png';
-const title = site.production ? site.title : `${site.title} · Demo`;
+const title = customTitle || (site.production ? site.title : `${site.title} · Demo`);
 const business = {
   '@context': 'https://schema.org',
   '@type': 'HomeAndConstructionBusiness',
   ...(canonical ? { '@id': `${canonical}#business`, url: canonical } : {}),
   name: site.businessName,
+  ...(Astro.site ? { logo: { '@type': 'ImageObject', url: new URL('/logo.png', Astro.site).href, width: 512, height: 512 } } : {}),
   description: site.description,
   telephone: `+${site.whatsappNumber}`,
   address: { '@type': 'PostalAddress', ...site.address },
   areaServed: site.serviceArea,
-  sameAs: site.socialProfiles.map(profile => profile.url),
+  sameAs: [...site.socialProfiles.map(profile => profile.url), site.googleBusinessProfileUrl],
 };
 ---
 <!doctype html>
@@ -25,9 +28,10 @@ const business = {
     <meta name="theme-color" content="#F5F2EB" />
     <title>{title}</title>
     <meta name="description" content={site.description} />
-    <meta name="robots" content={site.production ? 'index,follow' : 'noindex,follow'} />
+    <meta name="robots" content={indexable ? 'index,follow' : 'noindex,follow'} />
     {canonical && <link rel="canonical" href={canonical} />}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_AR" />
@@ -44,15 +48,17 @@ const business = {
     <meta name="twitter:description" content={site.description} />
     <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:image:alt" content="JL Aberturas. Aberturas a medida para tu espacio." />
-    <script type="application/ld+json" set:html={JSON.stringify(business).replace(/</g, '\\u003c')} />
-    <noscript><style is:global>.hero{height:auto!important}.hero-scene{position:relative!important;height:auto!important;min-height:100svh}.leaf-moving{transform:translateX(100%)!important}.scroll-hint{visibility:hidden}.hero-reveal{opacity:1!important}</style></noscript>
+    {includeBusiness && <script type="application/ld+json" set:html={JSON.stringify(business).replace(/</g, '\\u003c')} />}
+    <noscript><style is:global>.hero{height:auto!important}.hero-scene{position:relative!important;height:auto!important;min-height:100svh}.leaf-moving{transform:translateX(100%)!important}.scroll-hint{visibility:hidden}.hero-reveal,.window-brand{opacity:1!important}@media(max-width:1023px){.window-composition{min-height:0}.window-shell{flex:none;height:clamp(170px,29svh,300px)}}</style></noscript>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <slot />
-    <script>
+    {enhance && <script>
       import { initLanding } from '../scripts/landing';
+      import { initMeasurement } from '../scripts/measurement';
       initLanding();
-    </script>
+      initMeasurement();
+    </script>}
   </body>
 </html>

@@ -1,71 +1,90 @@
-# Validación de la entrega
+# Validación de la preparación oficial
 
-Actualización: 8 de octubre de 2026. Mediciones sobre el build estático local, con Lighthouse 13.5.0. No son mediciones de usuarios reales ni garantías para cualquier hosting.
+Actualización: 8 de octubre de 2026. Lighthouse 13.5.0 sobre los builds estáticos locales, con compresión de texto. Las cifras son mediciones de laboratorio; Hostinger y los datos de usuarios reales todavía no se pueden medir.
 
-## Build y navegación
+## Build y separación de ambientes
 
-- `pnpm check` y `pnpm build`: sin errores.
-- 30 escenarios automatizados aprobados: seis tamaños y cuatro fallbacks en cada uno de Chromium 151.0.7922.34, Firefox 153.0 y WebKit 26.5.
+- `pnpm check`: 35 archivos, cero errores, advertencias o hints.
+- `pnpm build`: demo en `dist/`, `noindex,follow`, sin sitemap e identificada como demo.
+- `pnpm build:hostinger`: oficial en `release/hostinger/`, indexable, sin identificación de demo. Canonical, Open Graph, entidad y sitemap usan `https://jlaberturas.com.ar`.
+- `node qa/production.mjs`: aprobado. Verifica origen oficial, logos, datos estructurados, robots, sitemap, página 404 y separación de la demo.
+- ZIP verificado: **79 archivos, 3.47 MB**, con `index.html` en la raíz, `.htaccess` y `_astro/.htaccess`. No contiene fuentes, dependencias, credenciales ni archivos de desarrollo.
+- Página 404 personalizada: respuesta HTTP 404 comprobada con el servidor local; sin canonical, entidad empresarial ni JavaScript de la landing. Excluida del sitemap.
+
+Las reglas de Hostinger preparan HTTPS sin `www`, revalidación del HTML, caché de un año para assets versionados y respuesta 404. El servidor local **no ejecuta `.htaccess`**: redirecciones, certificado y cabeceras deben comprobarse otra vez después de subir el ZIP al alojamiento real.
+
+## Responsive, accesibilidad e interacción
+
+- **30 escenarios oficiales aprobados**: seis viewports y cuatro fallbacks por motor, en Chromium 151.0.7922.34, Firefox 153.0 y WebKit 26.5.
+- **10 escenarios de demo aprobados** en Chromium: los mismos tamaños y fallbacks.
 - Viewports: 320 × 568, 360 × 640, 390 × 844, 768 × 1024, 1366 × 768 y 1920 × 1080.
-- Scroll nativo, movimiento inverso, estado intermedio, teclado, foco, anclas suaves con posiciones intermedias, menú, touch emulado, enlaces WhatsApp y JSON-LD comprobados.
-- Márgenes simétricos del hero comprobados en los seis viewports. Firma del footer con corazón y enlace a `https://ramita.dev`, inspeccionada en mobile y desktop.
-- Catálogo de líneas/vidrios/opcionales, galería, redes, mapa lazy y datos estructurados locales comprobados. Mosquiteros encabeza los opcionales. Se omiten horarios, coordenadas y reseñas.
-- Sin JavaScript, scripts bloqueados, fallo de inicialización y reduced motion: contenido y contacto accesibles. Reduced motion y JavaScript desactivado eliminan el tramo sticky adicional.
+- En mobile/tablet, descripción y presupuesto visibles y utilizables desde el inicio, antes de la ventana. La apertura revela la marca dentro de la mitad libre.
+- Scroll nativo, estados cerrado/intermedio/abierto, movimiento inverso, teclado, foco, anclas suaves, menú mobile y touch emulado comprobados.
+- Sin JavaScript, módulo bloqueado, fallo de inicialización y reduced motion: información y contacto accesibles. Sin JavaScript y reduced motion muestran la ventana abierta y eliminan el recorrido extra.
 - Sin overflow horizontal. Verificado también un viewport equivalente al espacio disponible al hacer zoom al 200%.
-- Axe WCAG 2/2.1 A/AA: cero infracciones en los escenarios revisados. Las capturas y la composición de las secciones también se inspeccionaron visualmente.
-- Pruebas móviles emuladas; no se probó en teléfonos físicos. Las automatizaciones no sustituyen una revisión en dispositivos reales.
+- Cuatro preguntas en `details`/`summary`, operables con teclado, con respuestas presentes en el HTML.
+- Cinco categorías de productos y cinco fotografías de galería, dimensiones reservadas, carga responsive y lazy. Aclaraciones de imágenes ilustrativas conservadas.
+- Todos los destinos WhatsApp coinciden y sus cinco ubicaciones están identificadas para medición futura.
+- Dirección, cobertura, redes y perfil de Google coinciden con los datos confirmados. No se agregan horarios, geo ni reseñas.
+- Axe WCAG 2/2.1 A/AA: cero infracciones en los escenarios revisados. Hero abierto/cerrado, tablet e imagen social inspeccionados visualmente.
 
-Resultados y capturas: [browser-results.json](qa/artifacts/browser-results.json), en `qa/artifacts/`.
+Pruebas móviles emuladas; no realizadas en teléfonos físicos. Axe y la emulación no sustituyen una revisión manual en dispositivos reales.
+
+Resultados: [oficial](qa/artifacts/browser-results-official.json), [demo](qa/artifacts/browser-results-demo.json). Capturas en `qa/artifacts/`.
 
 ## Lighthouse
 
-Mediana de tres mediciones por perfil:
+Mediana de tres ejecuciones por perfil y por build:
 
-| Métrica | Mobile | Desktop |
-| --- | ---: | ---: |
-| Performance | 100 | 100 |
-| Accessibility | 100 | 100 |
-| Best Practices | 100 | 100 |
-| SEO de la demo | 66 | 66 |
-| LCP | 1,05 s | 0,32 s |
-| CLS | 0 | 0 |
-| TBT | 0 ms | 0 ms |
+| Categoría | Oficial mobile | Oficial desktop | Demo mobile | Demo desktop |
+| --- | ---: | ---: | ---: | ---: |
+| Performance | 100 | 100 | 100 | 100 |
+| Accessibility | 100 | 100 | 100 | 100 |
+| Best Practices | 100 | 100 | 100 | 100 |
+| SEO | 100 | 100 | 69 | 69 |
 
-El único chequeo puntuado de SEO que falla es la indexación: el `noindex,follow` de la demo es intencional. Robots permite rastrear para que los buscadores puedan leer esa directiva. El build local se midió sin URL configurada; la publicación usa su URL real de Vercel para canonical y metadatos absolutos.
+En el oficial, LCP mediano de **1.35 s mobile / 0.34 s desktop**, CLS **0** y TBT **0 ms**. En la demo, LCP de 1.20 s / 0.34 s, CLS 0 y TBT 0 ms. TBT es una métrica de laboratorio; no reemplaza INP ni una medición de Core Web Vitals con visitantes reales.
 
-Una salida de producción aislada, con `qa.invalid` como dominio reservado de prueba, obtuvo **SEO 100**. Se verificaron canonical, metadatos absolutos, sitemap, robots, retiro de la identificación de demo y rechazo del build oficial cuando falta el dominio. Esta salida no se publica; `dist/` conserva el modo demo.
+El único chequeo puntuado que falla en la demo es la indexación, por `noindex,follow` intencional. Robots permite rastrear para que los buscadores lean esa directiva. El oficial permite indexación y publica su sitemap.
 
-Lighthouse conserva una observación sin impacto en la puntuación sobre la cadena HTML → CSS; no identifica ahorro de LCP ni conexiones externas para precargar. No quedan advertencias de reflow forzado en la medición final.
+Permanece una observación sin impacto en la puntuación sobre la cadena HTML → CSS. No quedan chequeos puntuados pendientes en el oficial. Los 100 técnicos no garantizan posiciones, resultados enriquecidos ni recomendaciones de sistemas de IA.
 
-Reportes: [medianas y ejecuciones](qa/artifacts/lighthouse-summary.json), reportes HTML por ejecución y [SEO de producción](qa/artifacts/production-seo.json).
+Reportes HTML/JSON y medianas: [oficial](qa/artifacts/official/lighthouse-summary.json), [demo](qa/artifacts/demo/lighthouse-summary.json).
 
-## Peso
+## Peso y servicios externos
+
+Medición oficial a 1366 × 768, DPR 1, caché vacía:
 
 | Recurso | Tamaño |
 | --- | ---: |
-| HTML comprimido, incluyendo JS inline | 7,42 KB |
-| JavaScript propio | 2,30 KB / 0,95 KB gzip |
-| CSS | 28,77 KB / 7,19 KB gzip |
-| Fuente variable latina WOFF2 | 29,29 KB |
-| Assets propios en la carga inicial desktop | 128,40 KB, seis solicitudes |
-| Assets propios en el recorrido completo desktop | 157,94 KB, siete solicitudes |
+| HTML gzip, incluyendo JS inline | 9.22 KB |
+| JavaScript propio | 3.35 KB / 1.40 KB gzip |
+| CSS | 32.93 KB / 7.92 KB gzip |
+| Fuente variable latina WOFF2 | 29.29 KB |
+| Recursos propios en la carga inicial | 254.10 KB, nueve solicitudes |
+| Recursos propios en el recorrido completo | 289.83 KB, once solicitudes |
 
-El recorrido se midió a 1366 × 768 con DPR 1. Los números corresponden a recursos del sitio, incluyendo fotos de productos y galería. No se solicitan recursos de Google Maps en la carga inicial; al recorrer Ubicación se registraron 36 solicitudes externas del mapa, cuyo peso queda fuera de la cifra de assets propios. Los tamaños dependen de viewport, DPR, caché y compresión del servidor. No incluye cabeceras HTTP ni la imagen social, que no se descarga al visitar la landing.
+El navegador puede anticipar imágenes lazy cercanas al viewport; la carga inicial incluye esas solicitudes. Los bytes varían con viewport, DPR, caché y servidor. No incluyen cabeceras HTTP, imagen social ni tráfico externo de Google Maps.
 
-Detalle: [size-report.json](qa/artifacts/size-report.json). Los archivos de `qa/artifacts/` se generan localmente y no forman parte del sitio desplegable.
+Google Maps no se solicitó al cargar inicialmente; al recorrer Ubicación se registraron 36 solicitudes externas. **Analytics y Ads no descargaron etiquetas ni enviaron eventos**, con la configuración desactivada. `whatsapp_click` queda preparado como señal de clic, no como confirmación de consulta o venta.
 
-## Publicación
+Detalle: [size-report-official.json](qa/artifacts/size-report-official.json). Los reportes de QA están ignorados por Git y no se incluyen en el ZIP ni en Vercel.
 
-Demo publicada en [jl-aberturas.vercel.app](https://jl-aberturas.vercel.app/) mediante el proyecto `jl-aberturas` en la cuenta de Ramiro. Build remoto aprobado con Node 24 y pnpm 11.7.0.
+## Demo publicada
 
-Comprobación del sitio público con contextos anónimos a 1366 × 768 y 390 × 844: HTTP 200 sin login, imágenes/fuente cargadas, sin errores de página ni respuestas 4xx, márgenes simétricos, scroll suave nativo, firma del footer y metadatos absolutos correctos. Se mantiene `noindex,follow` y modo demo. Resultado: [deployment-results.json](qa/artifacts/deployment-results.json).
+Actualizada en [jl-aberturas.vercel.app](https://jl-aberturas.vercel.app/) mediante la cuenta conectada de Ramiro. Build remoto aprobado con Node 24 y pnpm 11.7.0.
 
-Para repetir esta comprobación: `node qa/deployment.mjs`. `QA_URL` permite indicar otra URL publicada.
+Comprobación posterior a la publicación con contextos anónimos a 1366 × 768 y 390 × 844: HTTP 200 sin login, imágenes y fuente cargadas, sin errores de página ni respuestas 4xx, CTA mobile inicial, cuatro preguntas, perfil de Google, galería, márgenes simétricos, scroll suave, crédito del footer y metadatos correctos. Conserva `noindex,follow`.
 
-## Pendientes para el sitio oficial
+Resultado: [deployment-results.json](qa/artifacts/deployment-results.json). Repetir con `node qa/deployment.mjs`.
 
-Completar el dominio oficial y aprobar los textos con el negocio. Identidad y fotos propias siguen pendientes; también horarios, correo y cualquier detalle técnico/comercial adicional que se quiera mencionar. La dirección, localidad, cobertura y redes ya fueron proporcionadas e incorporadas. No se inventan garantías, estadísticas ni reseñas.
+## Pendientes externos para publicar el oficial
 
-El JSON-LD incorpora PostalAddress, areaServed y sameAs con los datos visibles confirmados. El score técnico de SEO no garantiza resultados enriquecidos, posiciones ni indexación.
+1. Aprobación del dominio, acceso a Hostinger, DNS y certificado HTTPS para dominio y `www`.
+2. Fotografías reales autorizadas: reemplazar referencias y sus alt/captions; retirar las leyendas únicamente cuando corresponda.
+3. Horarios y cualquier dato o condición comercial adicional que el negocio confirme. Logo, dirección, cobertura y perfil de Google ya están incorporados.
+4. Verificación de Search Console, envío del sitemap e inspección de URL tras publicar. Revisar las opciones de inclusión en funciones generativas y vincular la web desde el perfil de Google existente.
+5. Cuentas y conversiones de medición si se decide activarlas; configuración y privacidad deben revisarse antes. La administración del perfil de Google queda como servicio separado.
+6. Repetir la comprobación de redirecciones, caché, 404 y Lighthouse en el dominio oficial sobre Hostinger; después observar métricas reales cuando haya tráfico.
 
-Instrucciones de ejecución y edición: [README.md](README.md). Fuentes y licencias: [ASSETS.md](ASSETS.md).
+Instrucciones de entrega y edición: [README.md](README.md). Fuentes y licencias: [ASSETS.md](ASSETS.md).
