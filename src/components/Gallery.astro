@@ -1,0 +1,23 @@
+---
+import { Picture } from 'astro:assets';
+import { ArrowUpRight } from '@lucide/astro';
+import { gallery } from '../config/gallery';
+import { site } from '../config/site';
+const instagram = site.socialProfiles.find(profile => profile.name === 'Instagram');
+---
+<section id="galeria" class="gallery section-pad" aria-labelledby="gallery-title">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow section-index"><span>04</span> / Galería{gallery.illustrative && ' de referencia'}</p>
+    <div class="section-heading-main"><h2 id="gallery-title">{gallery.heading}</h2><p>{gallery.intro}</p></div>
+  </div>
+  <div class="gallery-layout">
+    {gallery.images.map((item, index) => <figure class="gallery-item" data-reveal>
+      <div class="gallery-photo" style={`aspect-ratio: ${item.ratio}`}>
+        <Picture src={item.image} widths={[400, 640, 960]} sizes="(min-width: 1024px) 30vw, (min-width: 600px) 46vw, 92vw" formats={['avif', 'webp']} quality={72} loading="lazy" decoding="async" alt={item.alt} style={`object-position: ${item.position}`} />
+      </div>
+      <figcaption><span aria-hidden="true">0{index + 1}</span>{item.caption}</figcaption>
+    </figure>)}
+    <div class="gallery-note" data-reveal><span class="gallery-note-frame" aria-hidden="true"></span><p>Más aberturas.<br />Más posibilidades.</p>{instagram && <a class="text-link" href={instagram.url} target="_blank" rel="noopener noreferrer">Ver Instagram <ArrowUpRight size={18} aria-hidden="true" /></a>}</div>
+  </div>
+  {gallery.illustrative && <p class="image-note">Imágenes ilustrativas; no representan trabajos de JL Aberturas.</p>}
+</section>

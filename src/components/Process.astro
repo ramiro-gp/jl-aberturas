@@ -1,0 +1,12 @@
+---
+import { steps } from '../config/content';
+---
+<section id="proceso" class="process section-pad" aria-labelledby="process-title">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow section-index"><span>03</span> / Paso a paso</p>
+    <div class="section-heading-main"><h2 id="process-title">Cómo<br /><span>trabajamos.</span></h2><p>Un recorrido claro.<br />Desde lo que imaginás hasta la instalación.</p></div>
+  </div>
+  <ol class="process-list">
+    {steps.map((step, index) => <li data-reveal><span class="process-number" aria-hidden="true">0{index + 1}</span><span class="process-node" aria-hidden="true"></span><h3>{step.title}</h3><p>{step.description}</p></li>)}
+  </ol>
+</section>

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-design": {
+      "source": "vercel-labs/open-agents",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/frontend-design/SKILL.md",
+      "computedHash": "1204c137431c4311701fa2bf7c3e0c4919957da830ffbbe7801d28e2edddb08b"
+    }
+  }
+}

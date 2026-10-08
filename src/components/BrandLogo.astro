@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo-jl-aberturas.png';
+import { site } from '../config/site';
+
+interface Props {
+  variant?: 'header' | 'footer';
+}
+
+const { variant = 'header' } = Astro.props;
+const isHeader = variant === 'header';
+const size = isHeader ? 64 : 104;
+---
+<a class={isHeader ? 'brand' : 'footer-brand'} href="#inicio">
+  <Image
+    class="brand-logo"
+    src={logo}
+    alt={site.businessName}
+    width={size}
+    height={size}
+    widths={isHeader ? [64, 128, 192] : [104, 208, 312]}
+    sizes={isHeader ? '(max-width: 767px) 54px, 64px' : '(max-width: 767px) 92px, 104px'}
+    format="webp"
+    quality={90}
+    loading={isHeader ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+</a>

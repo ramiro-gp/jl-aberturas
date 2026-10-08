@@ -1,0 +1,30 @@
+---
+import { Picture } from 'astro:assets';
+import { ArrowDownRight } from '@lucide/astro';
+import { copy, products } from '../config/content';
+import ProductOptions from './ProductOptions.astro';
+---
+<section id="productos" class="products section-pad" aria-labelledby="products-title">
+  <div class="section-heading" data-reveal>
+    <p class="eyebrow section-index"><span>01</span> / Nuestros productos</p>
+    <div class="section-heading-main"><h2 id="products-title">{copy.products.headingFirst}<br /><span>{copy.products.headingSecond}</span></h2><p>{copy.products.intro}</p></div>
+  </div>
+  <div class="product-grid">
+    {products.map((product, index) => (
+      <article class:list={['product', product.className]} data-reveal>
+        <div class="product-photo">
+          <Picture src={product.image} alt={product.alt} widths={product.className === 'product-large' ? [480, 800, 1200] : [400, 640, 960]} sizes={product.className === 'product-large' ? '(min-width: 768px) 55vw, 92vw' : '(min-width: 768px) 38vw, 92vw'} formats={['avif', 'webp']} quality={72} loading="lazy" decoding="async" style={`object-position: ${product.position}`} />
+          <span class="photo-index" aria-hidden="true">0{index + 1}</span>
+          <span class="photo-corner" aria-hidden="true"></span>
+        </div>
+        <div class="product-caption"><h3>{product.name}</h3><p>{product.description}</p></div>
+      </article>
+    ))}
+    <article class="product-custom" data-reveal>
+      <div class="custom-diagram" aria-hidden="true"><span class="measure-line measure-top"></span><span class="measure-line measure-side"></span><span class="custom-frame"><span></span></span><ArrowDownRight size={24} /></div>
+      <div><span class="eyebrow">Tu idea, tus medidas</span><h3>{copy.products.customHeading}</h3><p>{copy.products.customDescription}</p></div>
+    </article>
+  </div>
+  <p class="image-note">Imágenes ilustrativas. Las opciones se definen según cada proyecto.</p>
+  <ProductOptions />
+</section>

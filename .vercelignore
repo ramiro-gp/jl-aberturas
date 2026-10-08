@@ -1,0 +1,7 @@
+qa/
+.agents/
+skills-lock.json
+README.md
+QA.md
+ASSETS.md
+.env*

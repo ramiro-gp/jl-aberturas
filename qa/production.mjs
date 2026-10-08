@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs/promises';
+// Do not publish this test fixture. .invalid is a reserved non-public test domain.
+const fixtureUrl = 'https://qa.invalid';
+const output = 'qa/artifacts/production';
+const missing = spawnSync(process.execPath,['scripts/build-production.mjs'],{env:{...process.env, PUBLIC_SITE_URL:''},encoding:'utf8'});
+assert.notEqual(missing.status,0,'El build oficial no debe aceptar una URL ausente');
+assert((missing.stderr+missing.stdout).includes('PUBLIC_SITE_URL'));
+const script = "process.env.JL_SITE_MODE='production';const {build}=await import('astro');await build({outDir:'./qa/artifacts/production/'});";
+const built = spawnSync(process.execPath,['--input-type=module','-e',script],{env:{...process.env,PUBLIC_SITE_URL:fixtureUrl},encoding:'utf8'});
+if(built.status!==0)console.log(built.stdout,built.stderr);
+assert.equal(built.status,0);
+const html=await fs.readFile(`${output}/index.html`,'utf8');
+assert(html.includes('content="index,follow"'));
+assert(!html.includes('content="noindex,follow"'));
+assert(html.includes(`rel="canonical" href="${fixtureUrl}/"`));
+assert(html.includes(`${fixtureUrl}/og.png`));
+assert(!html.includes('Demo comercial'));
+assert(html.includes('Imágenes ilustrativas'));
+assert((await fs.readFile(`${output}/robots.txt`,'utf8')).includes(`${fixtureUrl}/sitemap-index.xml`));
+assert((await fs.readFile(`${output}/sitemap-0.xml`,'utf8')).includes(`${fixtureUrl}/`));
+assert((await fs.readFile('dist/index.html','utf8')).includes('content="noindex,follow"'),'El build entregado debe permanecer demo');
+console.log('Producción: guard de dominio, canonical, Open Graph, sitemap, robots e identificación: OK. La salida dist/ sigue siendo demo.');

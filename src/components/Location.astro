@@ -1,0 +1,19 @@
+---
+import { ArrowUpRight, MapPin } from '@lucide/astro';
+import { site, map } from '../config/site';
+---
+<section id="ubicacion" class="location section-pad" aria-labelledby="location-title">
+  <div class="location-layout">
+    <div class="location-info" data-reveal>
+      <p class="eyebrow section-index"><span>05</span> / Fábrica y cobertura</p>
+      <h2 id="location-title">Desde nuestra fábrica.<br /><span>Hasta tu espacio.</span></h2>
+      <div class="factory-address"><MapPin size={23} stroke-width={1.5} aria-hidden="true" /><div><span class="eyebrow">Fábrica directa</span><address>{site.address.streetAddress}<br />{site.address.addressLocality}</address></div></div>
+      <a class="text-link" href={map.directionsUrl} target="_blank" rel="noopener noreferrer">Cómo llegar a la fábrica <ArrowUpRight class="directions-arrow" size={18} aria-hidden="true" /></a>
+      <div class="service-area"><h3>Dónde trabajamos</h3><ul>{site.serviceArea.map(area => <li>{area}</li>)}</ul><p>Medición a domicilio sin cargo en CABA y GBA.</p></div>
+    </div>
+    <div class="location-map">
+      <iframe src={map.embedUrl} title={`Ubicación de JL Aberturas: ${site.address.streetAddress}, ${site.address.addressLocality}`} width="960" height="720" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <p class="map-caption">{site.address.streetAddress} · {site.address.addressLocality}<a href={map.directionsUrl} target="_blank" rel="noopener noreferrer">Abrir en Google Maps <ArrowUpRight size={14} aria-hidden="true" /></a></p>
+    </div>
+  </div>
+</section>

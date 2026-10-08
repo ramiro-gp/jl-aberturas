@@ -1,0 +1,58 @@
+---
+import { site } from '../config/site';
+import fontUrl from '@fontsource-variable/libre-franklin/files/libre-franklin-latin-wght-normal.woff2?url';
+import '../styles/global.css';
+const canonical = Astro.site ? new URL('/', Astro.site).href : undefined;
+const socialImage = Astro.site ? new URL('/og.png', Astro.site).href : '/og.png';
+const title = site.production ? site.title : `${site.title} · Demo`;
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  ...(canonical ? { '@id': `${canonical}#business`, url: canonical } : {}),
+  name: site.businessName,
+  description: site.description,
+  telephone: `+${site.whatsappNumber}`,
+  address: { '@type': 'PostalAddress', ...site.address },
+  areaServed: site.serviceArea,
+  sameAs: site.socialProfiles.map(profile => profile.url),
+};
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#F5F2EB" />
+    <title>{title}</title>
+    <meta name="description" content={site.description} />
+    <meta name="robots" content={site.production ? 'index,follow' : 'noindex,follow'} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content={site.businessName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={site.description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="JL Aberturas. Aberturas a medida para tu espacio." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={site.description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="JL Aberturas. Aberturas a medida para tu espacio." />
+    <script type="application/ld+json" set:html={JSON.stringify(business).replace(/</g, '\\u003c')} />
+    <noscript><style is:global>.hero{height:auto!important}.hero-scene{position:relative!important;height:auto!important;min-height:100svh}.leaf-moving{transform:translateX(100%)!important}.scroll-hint{visibility:hidden}.hero-reveal{opacity:1!important}</style></noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <slot />
+    <script>
+      import { initLanding } from '../scripts/landing';
+      initLanding();
+    </script>
+  </body>
+</html>

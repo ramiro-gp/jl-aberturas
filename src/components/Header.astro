@@ -1,0 +1,21 @@
+---
+import { ArrowUpRight, Plus } from '@lucide/astro';
+import { navigation } from '../config/content';
+import { getWhatsAppHref } from '../config/site';
+import WhatsAppLink from './WhatsAppLink.astro';
+import BrandLogo from './BrandLogo.astro';
+---
+<header class="site-header">
+  <BrandLogo />
+  <nav class="desktop-nav" aria-label="Navegación principal">
+    {navigation.map(item => <a href={item.href}>{item.label}</a>)}
+  </nav>
+  <div class="header-contact"><WhatsAppLink label="Consultar por WhatsApp" variant="header" /></div>
+  <details class="mobile-menu">
+    <summary>Menú <Plus size={18} aria-hidden="true" /></summary>
+    <nav aria-label="Navegación principal móvil">
+      {navigation.map(item => <a href={item.href}>{item.label}<ArrowUpRight size={18} aria-hidden="true" /></a>)}
+      <a class="mobile-contact" href={getWhatsAppHref()}>Consultar por WhatsApp<ArrowUpRight size={18} aria-hidden="true" /></a>
+    </nav>
+  </details>
+</header>
