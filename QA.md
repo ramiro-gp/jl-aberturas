@@ -85,9 +85,13 @@ Resultado local: [measurement-results.json](qa/artifacts/measurement-results.jso
 
 Actualizada en [jl-aberturas.vercel.app](https://jl-aberturas.vercel.app/) mediante la cuenta conectada de Ramiro. Build remoto aprobado con Node 24 y pnpm 11.7.0.
 
-La última comprobación pública registrada precede a estas mejoras. La actualización se comprobará después de desplegarla con contextos anónimos a 1366 × 768 y 390 × 844, incluidos los nuevos CTA, teléfono, metadatos, cinco preguntas y tres referencias. La demo conserva `noindex,follow`.
+Comprobación de esta actualización con contextos anónimos a 1366 × 768 y 390 × 844: HTTP 200 sin login, imágenes y fuente cargadas, sin errores de página ni recursos propios fallidos, CTA mobile inicial, dos CTA de productos/líneas, teléfono clicable, cinco preguntas y tres referencias. Márgenes simétricos, scroll suave, perfil de Google, crédito del footer y metadatos correctos. La imagen social pública coincide byte por byte con el archivo actualizado. La ruta inexistente devuelve HTTP 404 con la página personalizada, sin canonical ni entidad. Conserva `noindex,follow`.
+
+Despliegue verificado: `dpl_5K8aLw8GE8GXhmiUTPS6fBRLdzLC`, desde el código del commit `7311910`. Capturas públicas de los nuevos CTA: `qa/artifacts/published-cta-1366.png` y `qa/artifacts/published-cta-390.png`.
 
 Resultado: [deployment-results.json](qa/artifacts/deployment-results.json). Repetir con `node qa/deployment.mjs`.
+
+El código y los commits anteriores están publicados en [GitHub](https://github.com/ramiro-gp/jl-aberturas), rama `main`, con seguimiento de `origin/main`. Los reportes y capturas permanecen locales y se pueden regenerar con los comandos de QA.
 
 ## Pendientes externos para publicar el oficial
 

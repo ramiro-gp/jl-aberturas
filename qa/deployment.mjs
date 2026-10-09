@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
 
 const url = process.env.QA_URL || 'https://jl-aberturas.vercel.app/';
@@ -50,6 +51,8 @@ try {
     assert.equal(await page.locator('html').evaluate(element => getComputedStyle(element).scrollBehavior), 'smooth');
     await page.screenshot({ path: `qa/artifacts/published-${viewport.width}.png` });
     await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.locator('.product-consultation').first().scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `qa/artifacts/published-cta-${viewport.width}.png` });
     await page.locator('#productos').scrollIntoViewIfNeeded();
     await page.waitForFunction(() => [...document.querySelectorAll('.product-photo img')].every(image => image.complete && image.naturalWidth > 0));
     await page.locator('#galeria').scrollIntoViewIfNeeded();
@@ -57,11 +60,18 @@ try {
     await page.locator('.site-footer').scrollIntoViewIfNeeded();
     const socialImage = await context.request.get(`${origin}/og.png`);
     assert.equal(socialImage.status(), 200);
+    assert.equal(createHash('sha256').update(await socialImage.body()).digest('hex'), createHash('sha256').update(await fs.readFile('public/og.png')).digest('hex'), 'La imagen social pública debe ser la versión actualizada');
     const robots = await context.request.get(`${origin}/robots.txt`);
     assert.equal(robots.status(), 200);
     assert((await robots.text()).includes('Allow: /'));
+    const notFound = await context.request.get(`${origin}/pagina-inexistente-qa`);
+    assert.equal(notFound.status(), 404);
+    const errorHtml = await notFound.text();
+    assert(errorHtml.includes('Página no encontrada'));
+    assert(!errorHtml.includes('rel="canonical"'));
+    assert(!errorHtml.includes('application/ld+json'));
     assert.equal(failures.length, 0, failures.join('\n'));
-    results.push({ viewport, anonymousPublicAccess: true, assets: true, metadata: true, heroMargins: true, footerCredit: true, localBusinessData: true, gallery: true, socialLinks: true, lazyMap: true, pass: true });
+    results.push({ viewport, anonymousPublicAccess: true, assets: true, metadata: true, heroMargins: true, footerCredit: true, localBusinessData: true, gallery: true, socialLinks: true, lazyMap: true, productCTAs: true, clickablePhone: true, currentSocialImage: true, custom404: true, pass: true });
     await context.close();
   }
 } finally {
