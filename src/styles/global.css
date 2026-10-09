@@ -1016,6 +1016,59 @@ h2 span {
   padding-bottom: 8px;
   border-bottom: 1px solid var(--rule);
 }
+.glass-options {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+.glass-options li {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.glass-options li:first-child { padding-top: 0; }
+.glass-options h4 { font-size: 15px; font-weight: 500; }
+.glass-options p, .recambio-note {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.glass-options p { margin-top: 8px; max-width: 500px; }
+.recambio-note { padding: 0 0 28px; max-width: 650px; }
+.product-consultation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+  margin-top: 36px;
+  padding: 28px 0;
+  border-block: 1px solid var(--rule);
+}
+.product-consultation > div { max-width: 520px; }
+.product-consultation .eyebrow { color: var(--bronze); margin-bottom: 12px; }
+.product-consultation h3 {
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+.product-consultation > div > p:last-child {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-top: 12px;
+}
+.product-consultation .whatsapp-link { flex-shrink: 0; max-width: 100%; }
+@media (max-width: 767px) {
+  .product-consultation .whatsapp-link { width: 100%; }
+}
+.phone-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .gallery {
   background: #ece8de;
   border-top: 1px solid var(--rule);
@@ -1032,6 +1085,15 @@ h2 span {
   break-inside: avoid;
   margin: 0 0 28px;
 }
+.gallery > .gallery-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px 36px;
+  margin: 24px 0 0;
+}
+.gallery > .gallery-note > p { margin-bottom: 0; }
 .gallery-photo {
   overflow: hidden;
   background: #d3d0c3;
@@ -1057,14 +1119,6 @@ h2 span {
 .gallery-note {
   padding: 28px 0 12px;
   border-top: 1px solid var(--rule);
-}
-.gallery-note-frame {
-  display: block;
-  width: 34px;
-  height: 43px;
-  border: 1px solid var(--bronze);
-  margin-bottom: 24px;
-  box-shadow: 7px 7px 0 -1px #ece8de, 7px 7px 0 0 var(--bronze);
 }
 .gallery-note > p {
   font-size: clamp(24px, 2.4vw, 38px);

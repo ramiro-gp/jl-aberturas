@@ -1,6 +1,7 @@
 ---
 import { MoveRight } from '@lucide/astro';
 import { productLines, glassTypes, accessories } from '../config/content';
+import WhatsAppLink from './WhatsAppLink.astro';
 ---
 <div class="product-options">
   <div class="options-heading" data-reveal><p class="eyebrow">Elegí la línea para tu proyecto</p><h3>Líneas de aberturas.</h3><p>Te asesoramos para definir la opción, las medidas y el vidrio.</p></div>
@@ -11,8 +12,13 @@ import { productLines, glassTypes, accessories } from '../config/content';
       <div class="line-detail"><p>{line.description}</p><ul>{line.features.map(feature => <li><MoveRight size={14} aria-hidden="true" />{feature}</li>)}</ul></div>
     </article>)}
   </div>
+  <p class="recambio-note" data-reveal>Evaluamos el marco existente para definir si el recambio puede hacerse sin obra.</p>
   <div class="options-bottom">
-    <div data-reveal><p class="eyebrow">El vidrio también se elige</p><h3>Tipos de vidrio</h3><ul class="option-names">{glassTypes.map(type => <li>{type}</li>)}</ul></div>
+    <div data-reveal><p class="eyebrow">El vidrio también se elige</p><h3>Tipos de vidrio</h3><ul class="glass-options">{glassTypes.map(type => <li><h4>{type.name}</h4><p>{type.description}</p></li>)}</ul></div>
     <div data-reveal><p class="eyebrow">Complementos opcionales</p><h3>Detalles que completan</h3><ul class="option-names">{accessories.map(item => <li>{item}</li>)}</ul></div>
+  </div>
+  <div class="product-consultation" data-reveal>
+    <div><p class="eyebrow">Te asesoramos</p><h3>Elegimos la opción para tu espacio.</h3><p>Contanos qué necesitás y evaluamos juntos la línea, el vidrio y la colocación.</p></div>
+    <WhatsAppLink label="Consultar por línea y vidrio" placement="options" />
   </div>
 </div>

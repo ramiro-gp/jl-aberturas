@@ -17,7 +17,7 @@ const instagram = site.socialProfiles.find(profile => profile.name === 'Instagra
       </div>
       <figcaption><span aria-hidden="true">0{index + 1}</span>{item.caption}</figcaption>
     </figure>)}
-    <div class="gallery-note" data-reveal><span class="gallery-note-frame" aria-hidden="true"></span><p>Más aberturas.<br />Más posibilidades.</p>{instagram && <a class="text-link" href={instagram.url} target="_blank" rel="noopener noreferrer">Ver Instagram <ArrowUpRight size={18} aria-hidden="true" /></a>}</div>
   </div>
   {gallery.illustrative && <p class="image-note">Imágenes ilustrativas; no representan trabajos de JL Aberturas.</p>}
+  <div class="gallery-note" data-reveal><p>Más aberturas.<br />Más posibilidades.</p>{instagram && <a class="text-link" href={instagram.url} target="_blank" rel="noopener noreferrer">Ver Instagram <ArrowUpRight size={18} aria-hidden="true" /></a>}</div>
 </section>

@@ -2,7 +2,7 @@
 
 Las fotografías son referencias visuales de categorías. No muestran obras, instalaciones ni productos comprobados de JL Aberturas. La leyenda de imágenes ilustrativas debe mantenerse mientras se utilicen.
 
-La galería reutiliza estas referencias con otras proporciones. Sus captions describen los espacios, no instalaciones del negocio. Para reemplazarla, editar `src/config/gallery.ts` con fotografías autorizadas del cliente y alt fiel a cada imagen.
+La galería reutiliza tres referencias —ventanas, corredizas y mamparas— con otras proporciones. Sus captions describen los espacios, no instalaciones del negocio. Para reemplazarla, editar `src/config/gallery.ts` con fotografías autorizadas del cliente y alt fiel a cada imagen.
 
 | Archivo | Autor y fuente | Licencia |
 | --- | --- | --- |

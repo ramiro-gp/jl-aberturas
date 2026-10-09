@@ -94,7 +94,13 @@ for (const name of browserNames) {
       assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), `${expectedOrigin}/`);
       assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'), `${expectedOrigin}/og.png`);
       assert.equal(await page.locator('script[src*="googletagmanager"]').count(), 0);
-      assert.equal(await page.locator('.question').count(), 4);
+      assert.equal(await page.locator('.question').count(), 5);
+      assert((await page.locator('meta[name="description"]').getAttribute('content')).includes('aluminio'));
+      assert((await page.title()).includes('aluminio'));
+      assert.equal(await page.locator('a[href="tel:+5491141695236"]').count(), 1);
+      assert.equal(await page.locator('.glass-options li').count(), 3);
+      assert.equal(await page.locator('.glass-options li p').count(), 3);
+      assert.equal(await page.locator('.product-consultation a').count(), 2);
       if (width < 1024) {
         assert.equal(actual.revealOpacity, 1, 'Mobile/tablet: texto visible desde el inicio');
         const cta = await page.locator('.hero-reveal a').boundingBox();
@@ -107,7 +113,7 @@ for (const name of browserNames) {
         .evaluateAll((links) => links.map((link) => link.href));
       assert(hrefs.length >= 3);
       assert.equal(new Set(hrefs).size, 1);
-      assert.deepEqual(await page.locator('a[href^="https://wa.me/"]').evaluateAll(links => links.map(link => link.dataset.whatsappPlacement).sort()), ['contact', 'footer', 'header', 'hero', 'menu']);
+      assert.deepEqual(await page.locator('a[href^="https://wa.me/"]').evaluateAll(links => links.map(link => link.dataset.whatsappPlacement).sort()), ['contact', 'footer', 'header', 'hero', 'menu', 'options', 'products']);
       const contact = new URL(hrefs[0]);
       assert.equal(contact.pathname, "/5491141695236");
       assert.equal(
@@ -130,8 +136,8 @@ for (const name of browserNames) {
       assert.equal(await page.locator('.location-map iframe').getAttribute('loading'), 'lazy');
       assert((await page.locator('.location-map iframe').getAttribute('src')).includes('Pastoriza%201765'));
       assert.equal(await page.locator('.line-item').count(), 2);
-      assert.equal(await page.locator('.options-bottom .option-names').nth(1).locator('li').first().textContent(), 'Mosquiteros');
-      assert.equal(await page.locator('.gallery-item').count(), 5);
+      assert.equal(await page.locator('.options-bottom .option-names li').first().textContent(), 'Mosquiteros');
+      assert.equal(await page.locator('.gallery-item').count(), 3);
       await page.screenshot({
         path: `qa/artifacts/${name}-${width}-closed.png`,
       });

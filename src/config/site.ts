@@ -5,9 +5,9 @@ export const site = {
   whatsappMessage:
     "Hola, vi la web de JL Aberturas y quería consultar por una abertura.",
   production: __PRODUCTION_SITE__,
-  title: "JL Aberturas | Fábrica de aberturas en Rafael Calzada",
+  title: "JL Aberturas | Aberturas de aluminio en Rafael Calzada",
   description:
-    "Fábrica de aberturas en Rafael Calzada. Medición sin cargo en CABA y GBA, colocación en el día y líneas Módena y A30 NEW. Consultá por WhatsApp.",
+    "Aberturas de aluminio a medida en Rafael Calzada. Líneas Módena y A30 NEW, medición sin cargo en CABA y GBA y colocación. Pedí presupuesto por WhatsApp.",
   // Complete only with confirmed business information, also visible on the page.
   address: {
     streetAddress: "Pastoriza 1765",
@@ -37,4 +37,8 @@ export function getWhatsAppHref(): string {
     );
   }
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
+}
+
+export function getPhoneHref(): string {
+  return `tel:+${site.whatsappNumber}`;
 }

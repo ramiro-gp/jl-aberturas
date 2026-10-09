@@ -17,13 +17,13 @@ export const copy = {
     titleFirst: "Aberturas a medida",
     titleSecond: "para tu espacio.",
     description:
-      "Fabricamos ventanas, ventanales y puertas corredizas en Rafael Calzada. Medición a domicilio sin cargo en CABA y GBA. Venta directa y colocación en el día.",
+      "Fabricamos aberturas de aluminio a medida en Rafael Calzada. Medición a domicilio sin cargo en CABA y GBA. Venta directa y colocación en el día.",
   },
   products: {
     headingFirst: "Aberturas para",
     headingSecond: "cada espacio.",
     intro:
-      "Fabricamos y vendemos aberturas a medida para viviendas y obras. Te asesoramos en la elección y coordinamos la instalación en CABA y GBA.",
+      "Fabricamos ventanas, ventanales y puertas corredizas de aluminio a medida para viviendas y obras. También evaluamos tu proyecto de mamparas y techos de vidrio. Coordinamos la instalación en CABA y GBA.",
     customHeading: "Aberturas a medida",
     customDescription:
       "Cada espacio tiene sus medidas. Contanos tu idea y definimos juntos la abertura que necesitás.",
@@ -31,7 +31,7 @@ export const copy = {
   about: {
     heading: ["Fabricamos.", "Te asesoramos.", "Instalamos."],
     description:
-      "Tenemos fábrica propia en Rafael Calzada. Fabricamos y vendemos aberturas a medida, te asesoramos para elegir la línea y el vidrio, y nos ocupamos de la colocación. Atención directa, desde la medición hasta la abertura instalada.",
+      "Tenemos fábrica propia en Rafael Calzada. Fabricamos y vendemos aberturas de aluminio a medida, te asesoramos para elegir la línea y el vidrio, y nos ocupamos de la colocación. Atención directa, desde la medición hasta la abertura instalada.",
     note: "Fábrica propia. Atención directa.",
   },
   contact: {
@@ -108,19 +108,23 @@ export const steps = [
 export const productLines = [
   {
     name: "Módena",
-    use: "Pensada para el recambio",
-    description: "Una opción para renovar tus aberturas, con hermeticidad y colocación sobre el marco existente, sin obra.",
-    features: ["Recambio sobre el marco existente", "Sin obra", "Hermeticidad"],
+    use: "Versatilidad para tu vivienda",
+    description: "Una línea de aluminio versátil para ventanas y puertas de medidas habituales. Una opción para construir o renovar, con distintas formas de apertura y vidrio según tu proyecto.",
+    features: ["Construcción y renovación", "Distintas formas de apertura", "Vidrio según el proyecto"],
   },
   {
     name: "A30 NEW",
-    use: "Diseño moderno y robustez",
-    description: "Diseño moderno, seguridad y aislamiento. Una línea robusta para un recambio rápido y una terminación de calidad.",
-    features: ["Seguridad y aislamiento", "Recambio rápido", "Estructura robusta"],
+    use: "Alta prestación y amplitud",
+    description: "Una línea de aluminio de alta prestación para proyectos que requieren aberturas de mayor tamaño. Evaluamos la tipología, las medidas y el vidrio según el uso y el lugar de instalación.",
+    features: ["Alta prestación", "Proyectos de mayor tamaño", "Medidas a evaluar"],
   },
 ] as const;
 
-export const glassTypes = ["Vidrio float", "Vidrio DVH", "Vidrio laminado"] as const;
+export const glassTypes = [
+  { name: "Vidrio float", description: "Vidrio plano simple. Evaluamos el espesor y su uso según la abertura y el espacio." },
+  { name: "Vidrio DVH", description: "Doble vidriado hermético: dos vidrios separados por una cámara sellada que ayuda al aislamiento térmico. Su desempeño depende de la composición elegida." },
+  { name: "Vidrio laminado", description: "Dos o más vidrios unidos por una lámina intermedia que ayuda a retener los fragmentos ante una rotura. Evaluamos su composición según el proyecto." },
+] as const;
 export const accessories = ["Mosquiteros", "Premarcos", "Tapajuntas"] as const;
 
 export const questions = [
@@ -135,6 +139,10 @@ export const questions = [
   {
     question: '¿Qué significa colocación en el día?',
     answer: 'Coordinamos una fecha para colocar tu abertura en el día. El plazo de fabricación se acuerda al consultar y es distinto del tiempo de colocación.',
+  },
+  {
+    question: '¿Puedo cambiar mis aberturas sin hacer obra?',
+    answer: 'Evaluamos el marco existente para definir si el recambio puede hacerse sin obra. La solución depende de su estado, las medidas y la abertura que quieras instalar.',
   },
   {
     question: '¿Qué necesito para pedir presupuesto?',

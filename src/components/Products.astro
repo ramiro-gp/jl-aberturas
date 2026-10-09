@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import { ArrowDownRight } from '@lucide/astro';
 import { copy, products } from '../config/content';
 import ProductOptions from './ProductOptions.astro';
+import WhatsAppLink from './WhatsAppLink.astro';
 ---
 <section id="productos" class="products section-pad" aria-labelledby="products-title">
   <div class="section-heading" data-reveal>
@@ -26,5 +27,9 @@ import ProductOptions from './ProductOptions.astro';
     </article>
   </div>
   <p class="image-note">Imágenes ilustrativas. Las opciones se definen según cada proyecto.</p>
+  <div class="product-consultation" data-reveal>
+    <div><p class="eyebrow">El próximo paso</p><h3>¿Qué abertura tenés en mente?</h3><p>Mandanos una foto o las medidas aproximadas. Te ayudamos a definirla.</p></div>
+    <WhatsAppLink label="Consultar por estas aberturas" placement="products" />
+  </div>
   <ProductOptions />
 </section>

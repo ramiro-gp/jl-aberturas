@@ -25,8 +25,8 @@ La salida desplegable está en `dist/`. `pnpm build` crea una **demo con `noinde
 
 - `src/config/site.ts`: nombre, WhatsApp, teléfono visible, mensaje, dirección, cobertura, redes, perfil de Google y metadatos. El número lleva país, sin `+`, espacios ni guiones. Todos los CTA comparten el mismo helper. La dirección genera los enlaces del mapa.
 - `src/config/origins.mjs`: origen oficial y origen demo. El build oficial usa siempre el dominio aprobado, aunque el entorno de Vercel tenga otra URL. `PUBLIC_SITE_URL` solo modifica la URL de la demo.
-- `src/config/measurement.ts`: IDs públicos de GA4 y Ads, y activación. Mantener `enabled: false` hasta configurar cuentas, conversiones y revisar privacidad/consentimiento. Los CTA identifican `header`, `menu`, `hero`, `contact` y `footer`.
-- `src/config/content.ts`: navegación, títulos, textos, categorías, imágenes, alt y pasos.
+- `src/config/measurement.ts`: IDs públicos de GA4 y Ads, y activación. Mantener `enabled: false` hasta configurar cuentas, conversiones y revisar privacidad/consentimiento. Los CTA identifican `header`, `menu`, `hero`, `products`, `options`, `contact` y `footer`.
+- `src/config/content.ts`: navegación, títulos, textos, categorías, imágenes, alt y pasos. Cada vidrio tiene nombre y descripción. Los textos explican las aberturas de aluminio, la selección de línea/vidrio y que el recambio sin obra depende de evaluar el marco existente.
 - `src/config/gallery.ts`: imágenes, captions, alt, proporciones y estado ilustrativo de la galería. Importar fotografías autorizadas desde `src/assets`, reemplazar las referencias y desactivar `illustrative` únicamente cuando toda la galería represente contenido real.
 - `src/styles/global.css`: paleta, tipografía, geometría y breakpoints. La fuente es local; su archivo latino se precarga una sola vez.
 - `scripts/og-source.svg`: composición social con logo oficial. `pnpm og` optimiza favicons/logo y regenera `public/og.png` con la fuente local (requiere Chromium de Playwright). Estos assets ya están versionados.
@@ -107,6 +107,19 @@ El contenido comercial y las respuestas útiles están en HTML estático, con he
 
 La configuración actual no descarga Google tag ni envía eventos. No se han creado cuentas ni campañas de Ads. Google Maps sigue siendo el servicio externo del mapa, independiente de esa configuración.
 
+#### Activación y conversiones sin duplicados
+
+1. Obtener los IDs públicos reales y revisar la información de privacidad y el consentimiento antes de habilitar la configuración. No poner tokens o credenciales en el sitio.
+2. Si se completa el ID y la etiqueta de Ads, el adaptador envía una conversión directa de Ads por clic. El evento de GA4 puede usarse para analizar las ubicaciones de los botones. **No importar también ese mismo clic de GA4 como una segunda conversión principal de Ads.**
+3. Si se elige importar el evento desde GA4, dejar vacíos el ID y la etiqueta de conversión directa de Ads. Definir una única ruta principal de conversión en las cuentas.
+4. Validar con Tag Assistant, DebugView y los diagnósticos de Ads: clics sobre texto/icono, todas las ubicaciones, red lenta y salida a WhatsApp. Un clic es intención; el registro de consultas recibidas y ventas se lleva por separado.
+
+`initMeasurement(config)` admite una configuración tipada para pruebas y solo se inicializa una vez por documento. Sin IDs válidos no descarga la etiqueta. La navegación a WhatsApp conserva su comportamiento nativo e inmediato, incluso si la etiqueta tarda o se bloquea. Por eso un clic temprano puede quedar en la cola y perderse al abandonar la página antes de que cargue la etiqueta; las pruebas simuladas no garantizan recepción en Google ni sustituyen la validación con cuentas reales.
+
+`pnpm qa:measurement` compila el módulo real y ejecuta 12 escenarios aislados. La etiqueta y el destino de WhatsApp son simulados: no se envían datos a Google ni mensajes. Los casos comprueban desactivación, validación de IDs, GA4, Ads, ambos adaptadores, icono SVG, inicialización repetida, carga lenta, etiqueta bloqueada y enlaces sin una ubicación admitida.
+
+Los textos orientativos de líneas y vidrios se basan en [Aluar](https://soluciones-arquitectura.aluar.com.ar/nuestros-productos/aberturas) y [VASA](https://www.vasa.com.ar/asesoramiento/informacion-tecnica/). No implican que JL sea distribuidor certificado ni que utilice una marca de vidrio determinada; no se publican espesores, prestaciones o garantías sin confirmación.
+
 La galería usa columnas CSS como base y `display: grid-lanes` como mejora donde esté disponible. Las proporciones están reservadas y las imágenes son responsive y lazy. No necesita JavaScript, carrusel ni librería masonry.
 
 ## Auditorías
@@ -116,6 +129,7 @@ Con `pnpm preview` abierto en otro terminal:
 ```sh
 pnpm exec playwright install
 pnpm qa
+pnpm qa:measurement
 pnpm audit:lighthouse
 node qa/production.mjs
 node qa/metrics.mjs
@@ -137,6 +151,12 @@ node qa/serve.mjs release/hostinger 4332
 
 Configurar `QA_URL=http://127.0.0.1:4332/` y `QA_MODE=production` para el oficial, o `QA_URL=http://127.0.0.1:4331/` y `QA_MODE=demo` para la demo. Los reportes Lighthouse se guardan separados en `qa/artifacts/official/` y `qa/artifacts/demo/`. Las pruebas incluyen CTA visible desde el inicio, marca en el vano, preguntas accesibles y etiquetas desactivadas.
 
-`qa/deployment.mjs` comprueba el sitio público de Vercel sin una sesión del propietario: acceso, assets, canonical, Open Graph, márgenes del hero y crédito del footer en mobile/desktop.
+`qa/deployment.mjs` comprueba el sitio público de Vercel sin una sesión del propietario: acceso, assets, canonical, Open Graph, márgenes del hero, CTA de productos/líneas, teléfono clicable, cinco preguntas, tres referencias y crédito del footer en mobile/desktop.
 
-Ver [QA.md](QA.md) para los resultados. `noindex` hace fallar deliberadamente el chequeo SEO de la demo; el oficial tiene canonical absoluto y permite indexación. Las pruebas móviles son emuladas, no realizadas en teléfonos físicos. El código está versionado en Git con un snapshot anterior y la preparación oficial; todavía no hay un remoto configurado.
+Ver [QA.md](QA.md) para los resultados. `noindex` hace fallar deliberadamente el chequeo SEO de la demo; el oficial tiene canonical absoluto y permite indexación. Las pruebas móviles son emuladas, no realizadas en teléfonos físicos.
+
+## Repositorio y respaldo
+
+El código y su historial se conservan en [ramiro-gp/jl-aberturas](https://github.com/ramiro-gp/jl-aberturas), en la rama `main`. `origin` usa `https://github.com/ramiro-gp/jl-aberturas.git`. Para trabajar desde otra computadora, clonar el repositorio e instalar con `pnpm install --frozen-lockfile`.
+
+Git excluye `.env`/`.env.local`, `.vercel`, dependencias, builds, ZIP y reportes de QA. `.env.example` contiene únicamente configuración pública de ejemplo. Guardar las credenciales de despliegue por separado y generar de nuevo el ZIP con `pnpm build:hostinger`. La demo se actualiza en el proyecto Vercel existente; no se asume un despliegue automático por cada push a GitHub.

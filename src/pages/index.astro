@@ -11,7 +11,7 @@ import Location from '../components/Location.astro';
 import WhatsAppLink from '../components/WhatsAppLink.astro';
 import Questions from '../components/Questions.astro';
 import { copy, navigation } from '../config/content';
-import { site, getWhatsAppHref } from '../config/site';
+import { site, getWhatsAppHref, getPhoneHref } from '../config/site';
 ---
 <BaseLayout>
   <Header />
@@ -33,7 +33,7 @@ import { site, getWhatsAppHref } from '../config/site';
     <section id="contacto" class="contact section-pad" aria-labelledby="contact-title">
       <p class="eyebrow section-index" data-reveal><span>06</span> / Hablemos de tu proyecto</p>
       <div class="contact-main" data-reveal><h2 id="contact-title">{copy.contact.headingFirst}<br />{copy.contact.headingSecond} <span>{copy.contact.headingLast}</span></h2><ArrowUpRight class="contact-arrow" size={112} stroke-width={1} aria-hidden="true" /></div>
-      <div class="contact-bottom" data-reveal><p>{copy.contact.description}</p><div class="contact-action"><WhatsAppLink label="Consultar por WhatsApp" variant="large" placement="contact" /><span>Atención directa · {site.displayPhone}</span></div></div>
+      <div class="contact-bottom" data-reveal><p>{copy.contact.description}</p><div class="contact-action"><WhatsAppLink label="Consultar por WhatsApp" variant="large" placement="contact" /><span>Atención directa · <a class="phone-link" href={getPhoneHref()} aria-label={`Llamar a JL Aberturas al ${site.displayPhone}`}>{site.displayPhone}</a></span></div></div>
     </section>
   </main>
   <footer class="site-footer">

@@ -29,7 +29,11 @@ try {
     assert.equal(await page.locator('.footer-credit a').getAttribute('href'), 'https://ramita.dev');
     assert.equal(await page.locator('.footer-socials a').count(), 2);
     assert.equal(await page.locator('.google-profile-link').getAttribute('href'), 'https://share.google/Kp1DXKrPlq93V9DPx');
-    assert.equal(await page.locator('.question').count(), 4);
+    assert.equal(await page.locator('.question').count(), 5);
+    assert((await page.title()).includes('aluminio'));
+    assert.equal(await page.locator('.gallery-item').count(), 3);
+    assert.equal(await page.locator('.product-consultation a').count(), 2);
+    assert.equal(await page.locator('a[href="tel:+5491141695236"]').count(), 1);
     const entity = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
     assert.equal(entity.address.streetAddress, 'Pastoriza 1765');
     assert.equal(entity.address.addressLocality, 'Rafael Calzada');

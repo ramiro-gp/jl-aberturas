@@ -1,4 +1,4 @@
-import { measurement } from '../config/measurement';
+import { measurement, type MeasurementConfig, type WhatsAppPlacement } from '../config/measurement';
 
 declare global {
   interface Window {
@@ -7,15 +7,19 @@ declare global {
   }
 }
 
-export function initMeasurement() {
-  if (!measurement.enabled) return;
-  const analytics = /^G-[A-Z0-9]+$/.test(measurement.googleAnalyticsId)
-    ? measurement.googleAnalyticsId : '';
-  const ads = /^AW-\d+$/.test(measurement.googleAdsConversionId)
-    && /^[\w-]+$/.test(measurement.googleAdsConversionLabel)
-    ? measurement.googleAdsConversionId : '';
+let initialized = false;
+const placements: readonly WhatsAppPlacement[] = ['header', 'menu', 'hero', 'products', 'options', 'contact', 'footer'];
+
+export function initMeasurement(config: MeasurementConfig = measurement) {
+  if (!config.enabled || initialized) return;
+  const analytics = /^G-[A-Z0-9]+$/.test(config.googleAnalyticsId)
+    ? config.googleAnalyticsId : '';
+  const ads = /^AW-\d+$/.test(config.googleAdsConversionId)
+    && /^[\w-]+$/.test(config.googleAdsConversionLabel)
+    ? config.googleAdsConversionId : '';
   const id = analytics || ads;
   if (!id) return;
+  initialized = true;
 
   window.dataLayer ??= [];
   window.gtag ??= function () { window.dataLayer!.push(arguments); };
@@ -31,11 +35,12 @@ export function initMeasurement() {
     const link = event.target instanceof Element
       ? event.target.closest<HTMLAnchorElement>('a[data-whatsapp-placement]') : null;
     if (!link || new URL(link.href).hostname !== 'wa.me') return;
-    const placement = link.dataset.whatsappPlacement;
+    const placement = link.dataset.whatsappPlacement as WhatsAppPlacement | undefined;
+    if (!placement || !placements.includes(placement)) return;
     // A click is an intent signal, not proof of a received message or a sale.
     if (analytics) window.gtag?.('event', 'whatsapp_click', { cta_location: placement });
     if (ads) window.gtag?.('event', 'conversion', {
-      send_to: `${ads}/${measurement.googleAdsConversionLabel}`,
+      send_to: `${ads}/${config.googleAdsConversionLabel}`,
     });
     // Native navigation stays immediate. No preventDefault, timeout or lead PII.
   });

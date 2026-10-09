@@ -1,10 +1,11 @@
 import { chromium } from "playwright";
 import fs from "node:fs/promises";
 await fs.mkdir("qa/artifacts", { recursive: true });
+const url = process.env.QA_URL || "http://127.0.0.1:4321/";
 const browser = await chromium.launch({ headless: true, channel: "chrome" });
 const page = await browser.newPage({ viewport: { width: 1366, height: 768 } });
 page.on("pageerror", (error) => console.log("PAGE ERROR", error.message));
-await page.goto("http://127.0.0.1:4321/", { waitUntil: "networkidle" });
+await page.goto(url, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 await page.screenshot({ path: "qa/artifacts/desktop-closed.png" });
 await page.evaluate(() =>
@@ -29,7 +30,7 @@ await page.locator('.product-options').screenshot({ path: 'qa/artifacts/product-
 await page.locator('.site-footer').screenshot({ path: 'qa/artifacts/desktop-footer.png' });
 await page.emulateMedia({ reducedMotion: 'no-preference' });
 await page.setViewportSize({ width: 360, height: 640 });
-await page.goto("http://127.0.0.1:4321/", { waitUntil: "networkidle" });
+await page.goto(url, { waitUntil: "networkidle" });
 await page.screenshot({ path: "qa/artifacts/mobile-closed.png" });
 await page.evaluate(() =>
   window.scrollTo(
