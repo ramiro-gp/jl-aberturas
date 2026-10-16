@@ -6,7 +6,7 @@ interface Props { title?: string; indexable?: boolean; includeBusiness?: boolean
 const { title: customTitle, indexable = site.production, includeBusiness = true, includeCanonical = true, enhance = true } = Astro.props;
 const canonical = includeCanonical && Astro.site ? new URL('/', Astro.site).href : undefined;
 const socialImage = Astro.site ? new URL('/og.png', Astro.site).href : '/og.png';
-const title = customTitle || (site.production ? site.title : `${site.title} · Demo`);
+const title = customTitle || site.title;
 const business = {
   '@context': 'https://schema.org',
   '@type': 'HomeAndConstructionBusiness',
