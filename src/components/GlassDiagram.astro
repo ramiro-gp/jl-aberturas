@@ -1,0 +1,53 @@
+---
+interface Props { kind: 'float' | 'dvh' | 'laminado' | 'templado'; }
+const { kind } = Astro.props;
+const panelId = `glass-panel-${kind}`;
+const gradientId = `glass-fill-${kind}`;
+---
+<svg class="glass-diagram" viewBox="0 0 400 260" fill="none" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id={gradientId} x1="135" y1="66" x2="269" y2="223" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#edf4ee" stop-opacity=".88" />
+      <stop offset=".5" stop-color="#c5d5ce" stop-opacity=".32" />
+      <stop offset="1" stop-color="#afc5bb" stop-opacity=".7" />
+    </linearGradient>
+    <g id={panelId}>
+      <path d="M135 66 269 30 269 187 135 223Z" fill={`url(#${gradientId})`} stroke="#6b8679" stroke-width="1.5" />
+      <path d="m269 30 6 4v157l-6-4Z" fill="#8fa99b" fill-opacity=".6" stroke="#6b8679" />
+      <path d="m135 223 6 4 134-36-6-4Z" fill="#8fa99b" fill-opacity=".7" stroke="#6b8679" />
+      <path d="m151 82 30-8m-30 16 51-14m44 80v17l-24 6" stroke="#fff" stroke-opacity=".8" stroke-width="2" stroke-linecap="round" />
+    </g>
+  </defs>
+  <path d="m61 226 191-51 91 24-191 51Z" fill="#252925" fill-opacity=".035" />
+  <path d="M44 233h34m244 0h34M49 228v10m302-10v10" stroke="#c8c6ba" />
+  {kind === 'dvh' ? (
+    <>
+      <use href={`#${panelId}`} transform="translate(28 -10)" />
+      <path d="M116 81 116 216l43-12 134-36V33" stroke="#777b70" stroke-width="7" stroke-linejoin="round" />
+      <path d="m120 211 41-11 128-34V38" stroke="#c5c6bb" stroke-width="2" stroke-dasharray="2 4" />
+      <use href={`#${panelId}`} transform="translate(-28 10)" />
+      <path d="M287 110h45m-45-5v10m45-5v5m0-5v-5" stroke="#805338" stroke-width="1.5" />
+      <circle cx="287" cy="110" r="2.5" fill="#805338" />
+    </>
+  ) : kind === 'laminado' ? (
+    <>
+      <use href={`#${panelId}`} transform="translate(10 -5)" />
+      <path d="M135 66 269 30 269 187 135 223Z" fill="#b68c60" fill-opacity=".25" stroke="#a77d51" stroke-width="2" />
+      <use href={`#${panelId}`} transform="translate(-10 5)" />
+      <path d="m279 97 36-10h17" stroke="#805338" stroke-width="1.5" />
+      <circle cx="279" cy="97" r="2.5" fill="#805338" />
+    </>
+  ) : (
+    <>
+      <use href={`#${panelId}`} />
+      {kind === 'templado' && (
+        <g stroke="#805338" stroke-width="1.6" stroke-linecap="round">
+          <path d="M305 105c-12-12 12-18 0-30m13 30c-12-12 12-18 0-30m13 30c-12-12 12-18 0-30" />
+          <path d="m302 78 3-4 4 2m6 2 3-4 4 2m6 2 3-4 4 2" />
+          <circle cx="306" cy="155" r="16" stroke="#a5ac9e" />
+          <path d="m299 155 5 5 9-11" />
+        </g>
+      )}
+    </>
+  )}
+</svg>

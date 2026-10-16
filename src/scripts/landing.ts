@@ -122,6 +122,24 @@ function initMenu() {
   });
 }
 
+function initProductViews() {
+  document.querySelectorAll<HTMLElement>('[data-product-views]').forEach((group) => {
+    const controls = group.querySelector<HTMLElement>('.product-view-controls');
+    const views = Array.from(group.querySelectorAll<HTMLElement>('.product-view'));
+    const buttons = Array.from(group.querySelectorAll<HTMLButtonElement>('[data-view-index]'));
+    if (!controls || views.length < 2 || buttons.length !== views.length) return;
+
+    const select = (selected: number) => {
+      views.forEach((view, index) => { view.hidden = index !== selected; });
+      buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === selected)));
+    };
+    buttons.forEach((button, index) => button.addEventListener('click', () => select(index)));
+    select(0);
+    controls.hidden = false;
+    group.dataset.viewsReady = '';
+  });
+}
+
 export function initLanding() {
   // Independent enhancements: a failure in one cannot disable the others.
   try {
@@ -140,5 +158,16 @@ export function initLanding() {
     initMenu();
   } catch {
     /* The native details element remains usable. */
+  }
+  try {
+    initProductViews();
+  } catch {
+    // Keep both photographs accessible if the selector cannot initialize.
+    document.querySelectorAll<HTMLElement>('[data-product-views]').forEach((group) => {
+      delete group.dataset.viewsReady;
+      group.querySelectorAll<HTMLElement>('.product-view').forEach(view => { view.hidden = false; });
+      const controls = group.querySelector<HTMLElement>('.product-view-controls');
+      if (controls) controls.hidden = true;
+    });
   }
 }

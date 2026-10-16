@@ -12,6 +12,7 @@
     "build:hostinger": "node scripts/build-hostinger.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "qa": "node qa/verify.mjs",
+    "qa:images": "node qa/images.mjs",
     "qa:measurement": "node qa/measurement.mjs",
     "audit:lighthouse": "node qa/lighthouse.mjs",
     "og": "node scripts/generate-brand-assets.mjs && node scripts/generate-og.mjs"

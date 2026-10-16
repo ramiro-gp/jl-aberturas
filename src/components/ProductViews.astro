@@ -1,0 +1,30 @@
+---
+import { Picture } from 'astro:assets';
+import type { ProductView } from '../config/content';
+interface Props { id: string; views: readonly ProductView[]; index: number; }
+const { id, views, index } = Astro.props;
+---
+<div class="product-views" data-product-views={id}>
+  <div class="product-views-stage">
+    {views.map((view, viewIndex) => (
+      <figure class="product-view" id={`product-${id}-view-${viewIndex}`}>
+        <div class="product-photo">
+          <Picture src={view.image} alt={view.alt} widths={[360, 640, 960]} sizes="(min-width: 768px) 43vw, 88vw" formats={['avif', 'webp']} fallbackFormat="jpg" quality={76} loading="lazy" decoding="async" />
+          <span class="photo-index" aria-hidden="true">0{index + 1}</span>
+          <span class="photo-corner" aria-hidden="true"></span>
+        </div>
+        {views.length > 1 && <figcaption class="product-view-label">{view.label}</figcaption>}
+      </figure>
+    ))}
+  </div>
+  {views.length > 1 && (
+    <div class="product-view-controls" hidden role="group" aria-label="Vistas de ventanas">
+      {views.map((view, viewIndex) => (
+        <button type="button" data-view-index={viewIndex} aria-controls={`product-${id}-view-${viewIndex}`} aria-pressed={viewIndex === 0 ? 'true' : 'false'}>
+          <Picture src={view.image} alt="" widths={[64, 128]} sizes="48px" formats={['webp']} fallbackFormat="jpg" quality={65} loading="lazy" decoding="async" />
+          <span>{view.label}</span>
+        </button>
+      ))}
+    </div>
+  )}
+</div>

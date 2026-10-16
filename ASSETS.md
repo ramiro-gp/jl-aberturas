@@ -1,8 +1,36 @@
 # Assets y licencias
 
-Las fotografías son referencias visuales de categorías. No muestran obras, instalaciones ni productos comprobados de JL Aberturas. La leyenda de imágenes ilustrativas debe mantenerse mientras se utilicen.
+Las imágenes son referencias visuales de categorías. No muestran obras ni instalaciones comprobadas de JL Aberturas. Las leyendas ilustrativas deben mantenerse mientras se utilicen.
 
-La galería reutiliza tres referencias —ventanas, corredizas y mamparas— con otras proporciones. Sus captions describen los espacios, no instalaciones del negocio. Para reemplazarla, editar `src/config/gallery.ts` con fotografías autorizadas del cliente y alt fiel a cada imagen.
+## Selección del cliente — 15 de octubre de 2026
+
+Los 15 adjuntos originales se conservan **sin modificar** en `references/client-images/`. Fueron enviados por el cliente y, según lo informado, obtenidos de Google. La fuente original y la autorización de uso **no están acreditadas**. El retoque y la generación de ambientes no establecen permiso sobre las referencias; resolver esa procedencia antes de publicación comercial.
+
+Se utilizó la herramienta integrada **image_gen**, sin CLI, API key ni proveedor alternativo. Los prompts completos, referencias y rutas de los masters generados se registran en [`references/image-generation.json`](references/image-generation.json). Los nueve derivados finales están dentro del proyecto en WebP; Astro genera las variantes AVIF/WebP/JPEG para la web. Las referencias originales y el registro no se sirven públicamente y se excluyen del upload de Vercel.
+
+| Derivado activo | Referencia y tratamiento |
+| --- | --- |
+| `src/assets/catalog/corrediza-blanca.webp` | #8: corrediza blanca de dos hojas; encuadre sin cabecera publicitaria, fondo marfil, perfiles y tiradores conservados. |
+| `src/assets/catalog/ventana-abrir.webp` | #1: ventana blanca cerrada, manija izquierda y bisagras derechas; fondo unificado. |
+| `src/assets/catalog/ventiluz-negro.webp` | #7: ventiluz abierto, brazo central y acabado negro; fondo y reflejos armonizados. |
+| `src/assets/catalog/puerta-blanca.webp` | #4: puerta opaca blanca, juntas horizontales, manija izquierda; mejora de claridad y fondo. |
+| `src/assets/catalog/mampara.webp` | #6: mampara fija con perfil plateado; se conserva el conjunto de apoyo para que el vidrio transparente sea legible. Grifería y plato son contexto ilustrativo, no accesorios incluidos. |
+| `src/assets/gallery/estar-corrediza.webp` | Ambiente generado a partir de #8; dos hojas, perfiles blancos, juntas y tiradores negros. |
+| `src/assets/gallery/acceso-puerta.webp` | Acceso generado a partir de #4; puerta blanca opaca de paneles horizontales. |
+| `src/assets/gallery/bano-mampara.webp` | Baño generado a partir de #6; panel fijo transparente y perfil plateado. |
+| `src/assets/gallery/techo-residencial.webp` | Ambiente residencial generado sin referencia de modelo específico; cubierta vidriada con estructura oscura. |
+
+Se revisaron visualmente los nueve resultados frente a las referencias: formas, cantidad de hojas, orientación, herrajes y ausencia de textos. Son imágenes orientativas, no planos, fichas de fabricación ni garantía de identidad de cada detalle. El retoque no recupera detalles originales que no existían en la imagen comprimida.
+
+**Excluidas:** #2 por redundancia y menor definición; #3 por resolución y reflejo dominante; #5 por sus 375 × 500 px; #9 por ser captura con controles/collage; #10 y #11 por menor calidad y redundancia. Las #12–15 se usan solo como referencias conceptuales: sus gráficos, fondos, textos comerciales y listas de espesores no se publican.
+
+## Gráficos de vidrio
+
+Los cuatro esquemas se construyen en `src/components/GlassDiagram.astro` con SVG propio: float, DVH, laminado y templado. Los nombres, detalles y explicaciones son HTML. Son esquemas conceptuales sin escala; no especifican dimensiones, prestaciones garantizadas ni disponibilidad. El espesor no define una categoría independiente y un DVH puede combinar laminado o templado. Referencia de contenido: [VASA — Información técnica](https://www.vasa.com.ar/asesoramiento/informacion-tecnica/).
+
+## Referencias anteriores conservadas
+
+Estas fotografías de Unsplash ya no aparecen en Productos ni Galería. Se conservan los archivos y sus créditos como historial de assets:
 
 | Archivo | Autor y fuente | Licencia |
 | --- | --- | --- |
@@ -20,4 +48,4 @@ Las tres primeras fotografías se consultaron y descargaron el 7 de octubre de 2
 - **Favicon, icono de inicio y logo público:** `public/favicon.png` (96px), `public/apple-touch-icon.png` (180px) y `public/logo.png` (512px), optimizados con Sharp a partir del PNG oficial sin redibujar la identidad ni quitar el blanco interior.
 - **Hero y dibujos:** construidos con HTML/CSS/SVG. La imagen social `public/og.png` (1200 × 630) incorpora el logo oficial; se renderiza con la fuente local desde `scripts/og-source.svg`. `pnpm og` regenera estos recursos.
 
-Para sustituir imágenes: colocar las fotografías autorizadas en `src/assets/products`, actualizar imports/alt/encuadre en `src/config/content.ts`, y reconstruir. No retirar la leyenda hasta que todas las fotos representen contenido real autorizado.
+Para sustituir imágenes: colocar los derivados en `src/assets/catalog` o `src/assets/gallery`, actualizar imports, vistas y alt en `src/config/content.ts` y `src/config/gallery.ts`, y reconstruir. `ProductViews.astro` admite varias vistas por categoría. No retirar las leyendas hasta que las imágenes representen contenido real autorizado; mantener la identificación de IA cuando corresponda.

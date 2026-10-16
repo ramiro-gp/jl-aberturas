@@ -18,6 +18,6 @@ const instagram = site.socialProfiles.find(profile => profile.name === 'Instagra
       <figcaption><span aria-hidden="true">0{index + 1}</span>{item.caption}</figcaption>
     </figure>)}
   </div>
-  {gallery.illustrative && <p class="image-note">Imágenes ilustrativas; no representan trabajos de JL Aberturas.</p>}
-  <div class="gallery-note" data-reveal><p>Más aberturas.<br />Más posibilidades.</p>{instagram && <a class="text-link" href={instagram.url} target="_blank" rel="noopener noreferrer">Ver Instagram <ArrowUpRight size={18} aria-hidden="true" /></a>}</div>
+  {gallery.illustrative && <p class="image-note">Visualizaciones ilustrativas generadas con IA; no representan trabajos realizados por JL Aberturas.</p>}
+  <div class="gallery-note" data-reveal><p>Más aberturas.<br />Más posibilidades.</p>{instagram && <a class="text-link" href={instagram.url} target="_blank" rel="noopener noreferrer">Ver Instagram <ArrowUpRight class="external-arrow" size={18} aria-hidden="true" /></a>}</div>
 </section>

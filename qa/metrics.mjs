@@ -8,7 +8,8 @@ const official = process.env.QA_MODE === 'production';
 const buildDir = official ? 'release/hostinger' : 'dist';
 const html = await fs.readFile(`${buildDir}/index.html`, 'utf8');
 const files = await fs.readdir(`${buildDir}/_astro`);
-const scripts = [...html.matchAll(/<script type="module"[^>]*>([\s\S]*?)<\/script>/g)].map(match=>match[1]).join('');
+const inlineScripts = [...html.matchAll(/<script type="module"[^>]*>([\s\S]*?)<\/script>/g)].map(match=>match[1]).join('');
+const scripts = Buffer.concat([Buffer.from(inlineScripts), ...await Promise.all(files.filter(file=>file.endsWith('.js')).map(file=>fs.readFile(`${buildDir}/_astro/${file}`)))]);
 const css = Buffer.concat(await Promise.all(files.filter(file=>file.endsWith('.css')).map(file=>fs.readFile(`${buildDir}/_astro/${file}`))));
 const sizes = {
   htmlRaw:Buffer.byteLength(html),htmlGzip:gzipSync(html).length,
@@ -37,7 +38,7 @@ try {
   sizes.externalRequests=externalRequests.length;
   sizes.measurementRequested=externalRequests.some(request => /googletagmanager\.com|google-analytics\.com|googleadservices\.com/.test(new URL(request).hostname));
   assert.equal(sizes.measurementRequested, false, 'No se deben descargar etiquetas de medición desactivadas');
-  sizes.requestedImages=await page.locator('.product-photo img').evaluateAll(images=>images.map(image=>({src:new URL(image.currentSrc).pathname,loaded:image.complete&&image.naturalWidth>0})));
+  sizes.requestedImages=await page.locator('.product-photo img, .roof-photo img, .gallery-photo img').evaluateAll(images=>images.map(image=>({src:image.currentSrc ? new URL(image.currentSrc).pathname : null,loaded:image.complete&&image.naturalWidth>0})));
   const missing=await page.request.get(new URL('/pagina-inexistente-qa', url).href);
   assert.equal(missing.status(), 404);
   assert((await missing.text()).includes('Página no encontrada'));

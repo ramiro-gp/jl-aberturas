@@ -33,6 +33,8 @@ try {
     assert.equal(await page.locator('.question').count(), 5);
     assert((await page.title()).includes('aluminio'));
     assert.equal(await page.locator('.gallery-item').count(), 3);
+    assert.equal(await page.locator('.product-grid > .product').count(), 4);
+    assert.equal(await page.locator('.glass-options > li').count(), 4);
     assert.equal(await page.locator('.product-consultation a').count(), 2);
     assert.equal(await page.locator('a[href="tel:+5491141695236"]').count(), 1);
     const entity = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());

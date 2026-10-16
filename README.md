@@ -26,8 +26,8 @@ La salida desplegable está en `dist/`. `pnpm build` crea una **demo con `noinde
 - `src/config/site.ts`: nombre, WhatsApp, teléfono visible, mensaje, dirección, cobertura, redes, perfil de Google y metadatos. El número lleva país, sin `+`, espacios ni guiones. Todos los CTA comparten el mismo helper. La dirección genera los enlaces del mapa.
 - `src/config/origins.mjs`: origen oficial y origen demo. El build oficial usa siempre el dominio aprobado, aunque el entorno de Vercel tenga otra URL. `PUBLIC_SITE_URL` solo modifica la URL de la demo.
 - `src/config/measurement.ts`: IDs públicos de GA4 y Ads, y activación. Mantener `enabled: false` hasta configurar cuentas, conversiones y revisar privacidad/consentimiento. Los CTA identifican `header`, `menu`, `hero`, `products`, `options`, `contact` y `footer`.
-- `src/config/content.ts`: navegación, títulos, textos, categorías, imágenes, alt y pasos. Cada vidrio tiene nombre y descripción. Los textos explican las aberturas de aluminio, la selección de línea/vidrio y que el recambio sin obra depende de evaluar el marco existente.
-- `src/config/gallery.ts`: imágenes, captions, alt, proporciones y estado ilustrativo de la galería. Importar fotografías autorizadas desde `src/assets`, reemplazar las referencias y desactivar `illustrative` únicamente cuando toda la galería represente contenido real.
+- `src/config/content.ts`: navegación, títulos, textos, categorías, vistas de producto, alt y pasos. Cuatro categorías principales y un bloque independiente de techos. Ventanas admite dos vistas (de abrir/ventiluz), con selector manual y ambas fotografías disponibles sin JavaScript. Cada vidrio tiene nombre, descripción, detalle y una clave para su esquema SVG.
+- `src/config/gallery.ts`: tres ambientes generados con IA a partir de referencias del cliente: estar con corrediza, acceso con puerta y baño con mampara. Imágenes, captions, alt, proporciones y estado ilustrativo. Mantener la leyenda de IA; desactivar `illustrative` únicamente cuando toda la galería represente fotografías reales autorizadas.
 - `src/styles/global.css`: paleta, tipografía, geometría y breakpoints. La fuente es local; su archivo latino se precarga una sola vez.
 - `scripts/og-source.svg`: composición social con logo oficial. `pnpm og` optimiza favicons/logo y regenera `public/og.png` con la fuente local (requiere Chromium de Playwright). Estos assets ya están versionados.
 - [ASSETS.md](ASSETS.md): fuentes, licencias y reemplazo de fotografías.
@@ -118,7 +118,9 @@ La configuración actual no descarga Google tag ni envía eventos. No se han cre
 
 `pnpm qa:measurement` compila el módulo real y ejecuta 12 escenarios aislados. La etiqueta y el destino de WhatsApp son simulados: no se envían datos a Google ni mensajes. Los casos comprueban desactivación, validación de IDs, GA4, Ads, ambos adaptadores, icono SVG, inicialización repetida, carga lenta, etiqueta bloqueada y enlaces sin una ubicación admitida.
 
-Los textos orientativos de líneas y vidrios se basan en [Aluar](https://soluciones-arquitectura.aluar.com.ar/nuestros-productos/aberturas) y [VASA](https://www.vasa.com.ar/asesoramiento/informacion-tecnica/). No implican que JL sea distribuidor certificado ni que utilice una marca de vidrio determinada; no se publican espesores, prestaciones o garantías sin confirmación.
+Los textos orientativos de líneas y vidrios se basan en [Aluar](https://soluciones-arquitectura.aluar.com.ar/nuestros-productos/aberturas) y [VASA](https://www.vasa.com.ar/asesoramiento/informacion-tecnica/). Float, DVH, laminado y templado tienen esquemas SVG propios y textos HTML; un DVH puede incorporar laminado o templado. No implican que JL sea distribuidor certificado ni que utilice una marca de vidrio determinada; no se publican espesores, prestaciones o garantías sin confirmación.
+
+Los originales del cliente y los prompts de imagegen están separados en `references/`; no se sirven públicamente. Los derivados activos están en `src/assets/catalog/` y `src/assets/gallery/`. La procedencia y autorización de las referencias de Google siguen pendientes de acreditar; ver `ASSETS.md`.
 
 La galería usa columnas CSS como base y `display: grid-lanes` como mejora donde esté disponible. Las proporciones están reservadas y las imágenes son responsive y lazy. No necesita JavaScript, carrusel ni librería masonry.
 
@@ -129,6 +131,7 @@ Con `pnpm preview` abierto en otro terminal:
 ```sh
 pnpm exec playwright install
 pnpm qa
+pnpm qa:images
 pnpm qa:measurement
 pnpm audit:lighthouse
 node qa/production.mjs
@@ -137,6 +140,8 @@ node qa/deployment.mjs
 ```
 
 `pnpm qa` recorre Chromium, Firefox y WebKit, seis viewports, teclado, touch emulado, anclas, WhatsApp, datos estructurados, fallbacks y axe WCAG AA. `QA_URL` permite cambiar la URL local. `QA_BROWSERS=chromium` limita motores y `QA_CHROME_CHANNEL=chrome` usa Chrome instalado.
+
+`pnpm qa:images` comprueba la carga de las fotografías y la estabilidad del selector, que la tarjeta de corredizas cabe bajo el header, y guarda capturas de catálogo, vidrios, techos y galería a 390, 1366 y 1920 px. Las capturas de viewport incluyen el header real; las capturas por sección ocultan solo los overlays fijos para facilitar la revisión visual.
 
 `pnpm audit:lighthouse` ejecuta Lighthouse tres veces por perfil mobile/desktop y guarda reportes y medianas en `qa/artifacts/` (ignorado). Requiere Chrome instalado. Las fotografías se cargan bajo demanda; los bytes iniciales y totales dependen del viewport elegido.
 

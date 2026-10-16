@@ -98,8 +98,15 @@ for (const name of browserNames) {
       assert((await page.locator('meta[name="description"]').getAttribute('content')).includes('aluminio'));
       assert((await page.title()).includes('aluminio'));
       assert.equal(await page.locator('a[href="tel:+5491141695236"]').count(), 1);
-      assert.equal(await page.locator('.glass-options li').count(), 3);
-      assert.equal(await page.locator('.glass-options li p').count(), 3);
+      assert.equal(await page.locator('.glass-options li').count(), 4);
+      assert.equal(await page.locator('.glass-options li p').count(), 4);
+      assert.equal(await page.locator('.glass-diagram').count(), 4);
+      assert.equal(await page.locator('.product-grid > .product').count(), 4);
+      assert.equal(await page.locator('.product-roof').count(), 1);
+      assert.equal(await page.locator('[data-product="corredizas"] h3').textContent(), 'Ventanales y corredizas');
+      assert((await page.locator('#galeria .image-note').textContent()).includes('generadas con IA'));
+      const photoHeights = await page.locator('.product-photo').evaluateAll(photos => photos.map(photo => photo.getBoundingClientRect().height));
+      assert(photoHeights.every(value => value <= (width < 768 ? 320 : 440) + 1), `${name} ${width}: fotos de catálogo demasiado altas`);
       assert.equal(await page.locator('.product-consultation a').count(), 2);
       if (width < 1024) {
         assert.equal(actual.revealOpacity, 1, 'Mobile/tablet: texto visible desde el inicio');
@@ -237,6 +244,26 @@ for (const name of browserNames) {
       // All below-fold copy is audited, including text which motion initially reveals.
       await page.emulateMedia({ reducedMotion: "reduce" });
       await settle(page);
+      const views = page.locator('[data-product-views="ventanas"]');
+      const deAbrir = views.getByRole('button', { name: 'De abrir', exact: true });
+      const ventiluz = views.getByRole('button', { name: 'Ventiluz', exact: true });
+      const stageHeight = (await views.locator('.product-views-stage').boundingBox()).height;
+      assert.equal(await deAbrir.getAttribute('aria-pressed'), 'true');
+      await ventiluz.focus();
+      await page.keyboard.press('Space');
+      assert.equal(await ventiluz.getAttribute('aria-pressed'), 'true');
+      assert(Math.abs((await views.locator('.product-views-stage').boundingBox()).height - stageHeight) < 0.5, 'El selector debe conservar la altura de la foto');
+      assert.equal(await views.locator('.product-view:not([hidden])').count(), 1);
+      assert((await views.locator('.product-view:not([hidden]) img').getAttribute('alt')).includes('ventiluz'));
+      await deAbrir.focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await deAbrir.getAttribute('aria-pressed'), 'true');
+      if (width === 1366) {
+        const card = page.locator('[data-product="corredizas"]');
+        await card.evaluate(element => scrollTo({ top: element.getBoundingClientRect().top + scrollY - document.querySelector('.site-header').getBoundingClientRect().height - 20, behavior: 'instant' }));
+        const bounds = await card.boundingBox();
+        assert(bounds.y >= 86 && bounds.y + bounds.height <= height, 'Corrediza, título y descripción deben caber bajo el header');
+      }
       const question = page.locator('.question').first();
       await question.locator('summary').focus();
       await page.keyboard.press('Enter');
@@ -293,6 +320,11 @@ for (const name of browserNames) {
         });
       await page.goto(url, { waitUntil: "networkidle" });
       if (fallback !== "no-js") await settle(page);
+      if (fallback === 'no-js' || fallback === 'blocked-js') {
+        const views = page.locator('[data-product-views="ventanas"]');
+        assert.equal(await views.locator('.product-view:not([hidden])').count(), 2, 'Sin JS deben estar disponibles ambas vistas');
+        assert.equal(await views.locator('.product-view-controls').isVisible(), false);
+      }
       const actual = await state(page);
       assert.equal(actual.revealOpacity, 1, `${fallback}: texto oculto`);
       assert.equal(actual.overflow, false);

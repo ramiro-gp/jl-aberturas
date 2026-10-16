@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-15",
+  "tool": "image_gen (built-in)",
+  "sourceRightsStatus": "Client supplied Google images; permission not yet documented. Editing/generation does not establish permission.",
+  "assets": [
+    {
+      "key": "catalog-sliding",
+      "destination": "src/assets/catalog/corrediza-blanca.webp",
+      "reference": "references/client-images/08-corrediza-blanca.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-51fa3eb6-bc9c-4c67-9c1a-4b477aca3fea.png",
+      "intent": "edit",
+      "prompt": "Use case: precise-object-edit. Asset type: catalog product photograph for JL Aberturas website. Edit the supplied photograph, not the product design. Preserve the exact number of leaves, frame proportions, frame cross sections, hardware, opening direction and color. Remove the original surrounding wall/background and any advertising header by reframing outside the product only. Seamless pale warm ivory background (#ede9e0), soft studio daylight, very subtle realistic contact shadow, restrained premium architectural catalog photography. Entire product visible with 7% margin, centered, no cropping of frame, straight geometry. No letters, logos, watermark, arrows or captions. Output a high-resolution square image. Target is the WHITE two-leaf sliding glazed door ONLY beneath the JL ABERTURAS sign. Keep its two black recessed handles, black glass seals and all four small corner protectors. Remove the sign from the composition. Keep glass lightly reflective and neutral; do not make it an opaque panel."
+    },
+    {
+      "key": "catalog-casement",
+      "destination": "src/assets/catalog/ventana-abrir.webp",
+      "reference": "references/client-images/01-ventana-abrir.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-15c0c0b3-4a8f-4e60-ad67-679c51b6d9d7.png",
+      "intent": "edit",
+      "prompt": "Use case: precise-object-edit. Asset type: catalog product photograph for JL Aberturas website. Edit the supplied photograph, not the product design. Preserve the exact number of leaves, frame proportions, frame cross sections, hardware, opening direction and color. Remove the original surrounding wall/background and any advertising header by reframing outside the product only. Seamless pale warm ivory background (#ede9e0), soft studio daylight, very subtle realistic contact shadow, restrained premium architectural catalog photography. Entire product visible with 7% margin, centered, no cropping of frame, straight geometry. No letters, logos, watermark, arrows or captions. Output a high-resolution square image. Target is the narrow white closed casement window, black handle on the left and two hinges on the right. Retain its narrow portrait proportions exactly. Restore only mild compression noise; no redesign or extra mullions."
+    },
+    {
+      "key": "catalog-awning",
+      "destination": "src/assets/catalog/ventiluz-negro.webp",
+      "reference": "references/client-images/07-ventiluz.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-61af1d0b-0d63-48bb-b024-9d1d20974b2c.png",
+      "intent": "edit",
+      "prompt": "Use case: precise-object-edit. Asset type: catalog product photograph for JL Aberturas website. Edit the supplied photograph, not the product design. Preserve the exact number of leaves, frame proportions, frame cross sections, hardware, opening direction and color. Remove the original surrounding wall/background and any advertising header by reframing outside the product only. Seamless pale warm ivory background (#ede9e0), soft studio daylight, very subtle realistic contact shadow, restrained premium architectural catalog photography. Entire product visible with 7% margin, centered, no cropping of frame, straight geometry. No letters, logos, watermark, arrows or captions. Output a high-resolution square image. Target is the black landscape awning window shown OPEN, with the central projecting opening arm and handle. Preserve the open sash angle and exact mechanism; do not turn it into a closed pane or add handles. Warm neutral reflections instead of blue cast, black finish retained."
+    },
+    {
+      "key": "catalog-door",
+      "destination": "src/assets/catalog/puerta-blanca.webp",
+      "reference": "references/client-images/04-puerta-blanca.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-8b48fe18-448d-4582-a283-d32b2ea4b3ec.png",
+      "intent": "edit",
+      "prompt": "Use case: precise-object-edit. Asset type: catalog product photograph for JL Aberturas website. Edit the supplied photograph, not the product design. Preserve the exact number of leaves, frame proportions, frame cross sections, hardware, opening direction and color. Remove the original surrounding wall/background and any advertising header by reframing outside the product only. Seamless pale warm ivory background (#ede9e0), soft studio daylight, very subtle realistic contact shadow, restrained premium architectural catalog photography. Entire product visible with 7% margin, centered, no cropping of frame, straight geometry. No letters, logos, watermark, arrows or captions. Output a high-resolution square image. Target is the white opaque aluminum entrance door, horizontal panel lines, slim frame, white handle and keyhole on the LEFT. Preserve all panel joints and original height/width ratio. Upgrade clarity gently without inventing hardware."
+    },
+    {
+      "key": "catalog-shower",
+      "destination": "src/assets/catalog/mampara.webp",
+      "reference": "references/client-images/06-mampara.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-0937b6ea-428e-44c4-ab85-ffa9a7ee0fd2.png",
+      "intent": "edit",
+      "prompt": "Use case: precise-object-edit. Asset type: catalog product photograph for JL Aberturas website. Edit the supplied photograph, not the product design. Preserve the exact number of leaves, frame proportions, frame cross sections, hardware, opening direction and color. Remove the original surrounding wall/background and any advertising header by reframing outside the product only. Seamless pale warm ivory background (#ede9e0), soft studio daylight, very subtle realistic contact shadow, restrained premium architectural catalog photography. Entire product visible with 7% margin, centered, no cropping of frame, straight geometry. No letters, logos, watermark, arrows or captions. Output a high-resolution square image. Target is the complete fixed single transparent shower screen assembly shown in the reference, with slim silver wall profile, beige tiled rear wall, chrome shower column and white tray. Preserve the glass panel shape, edge, fittings and perspective. Retain the supporting wall section and shower tray so transparent glass reads naturally; remove only the white studio surroundings. No new enclosure, extra glass door, hinges or handles."
+    },
+    {
+      "key": "ambient-living",
+      "destination": "src/assets/gallery/estar-corrediza.webp",
+      "reference": "references/client-images/08-corrediza-blanca.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-89f77d95-3961-4aac-8242-ff7a0bfa6627.png",
+      "intent": "generate",
+      "prompt": "Photorealistic architectural editorial photography for a warm, restrained Argentine residential website. Calm lived-in contemporary home, warm ivory plaster, pale limestone, modest oak accents, natural soft daylight, realistic scale and construction. Muted cream, sand, olive-gray and charcoal palette. Elegant but attainable, no extravagant mansion. Glass should be physically plausible and transparent, all frames straight. Product is the main subject. No text, no logo, no watermark, no people. Use case: compositing. Input image: product reference. Create a NEW room around the supplied WHITE two-leaf sliding glass door, preserving its frame design, black perimeter glass gaskets, black recessed handles, two panels and proportions. Install it floor-to-lintel in an ivory living room opening onto a modest leafy courtyard. Full door visible, closed with believable clear garden view. Small part of linen armchair and oak side table at edge, never across frame. Camera straight, eye level, vertical portrait 4:5 composition, door occupies the central 65% of width. Omit the advertising sign and packaging corner guards from the installed product. Do not add extra door leaves or mullions."
+    },
+    {
+      "key": "ambient-entry",
+      "destination": "src/assets/gallery/acceso-puerta.webp",
+      "reference": "references/client-images/04-puerta-blanca.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-ca7eb0f2-43a3-47a3-a65a-d033448826f6.png",
+      "intent": "generate",
+      "prompt": "Photorealistic architectural editorial photography for a warm, restrained Argentine residential website. Calm lived-in contemporary home, warm ivory plaster, pale limestone, modest oak accents, natural soft daylight, realistic scale and construction. Muted cream, sand, olive-gray and charcoal palette. Elegant but attainable, no extravagant mansion. Glass should be physically plausible and transparent, all frames straight. Product is the main subject. No text, no logo, no watermark, no people. Use case: compositing. Input image: product reference. Create a NEW modest residential entrance around the supplied WHITE opaque aluminum door, preserving its narrow tall frame, horizontal panel joints, left white lever and keyhole. Door closed in warm ivory plaster entry wall, pale stone threshold, small olive plant in a terracotta pot offset from door, soft angled morning sunlight. Entire door and frame visible with ample space above and below. Eye level front three-quarter view. Landscape 4:3 framing; door centered so it remains complete in a 4:3 crop. Do not add glazed panels, modernize hardware or alter panel layout."
+    },
+    {
+      "key": "ambient-bath",
+      "destination": "src/assets/gallery/bano-mampara.webp",
+      "reference": "references/client-images/06-mampara.png",
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-1510cf6f-5cbb-4e11-a15a-0fe07c1f0f3b.png",
+      "intent": "generate",
+      "prompt": "Photorealistic architectural editorial photography for a warm, restrained Argentine residential website. Calm lived-in contemporary home, warm ivory plaster, pale limestone, modest oak accents, natural soft daylight, realistic scale and construction. Muted cream, sand, olive-gray and charcoal palette. Elegant but attainable, no extravagant mansion. Glass should be physically plausible and transparent, all frames straight. Product is the main subject. No text, no logo, no watermark, no people. Use case: compositing. Input image: product reference. Create a NEW compact residential bathroom around the supplied single fixed shower screen. Preserve the one frameless clear rectangular glass panel, slim silver wall profile, chrome overhead shower column, beige tiled rear shower wall and white tray. Install naturally in a warm limestone and ivory bathroom. Subtle oak vanity edge at far left, one folded towel outside the shower, realistic reflections, clear visible glass edges, shower tray and glass top fully in frame. Camera eye level, landscape 4:3 photograph. Do not introduce an opening glass door, new hardware or multiple glass panels."
+    },
+    {
+      "key": "ambient-roof",
+      "destination": "src/assets/gallery/techo-residencial.webp",
+      "reference": null,
+      "generatedMaster": "C:/Users/ramiro/.codex/generated_images/01a1425d-5ae7-79b2-9149-7f6128c35798/exec-ab555d87-be2a-4e0f-8c4e-413941930331.png",
+      "intent": "generate",
+      "prompt": "Photorealistic architectural editorial photography for a warm, restrained Argentine residential website. Calm lived-in contemporary home, warm ivory plaster, pale limestone, modest oak accents, natural soft daylight, realistic scale and construction. Muted cream, sand, olive-gray and charcoal palette. Elegant but attainable, no extravagant mansion. Glass should be physically plausible and transparent, all frames straight. Product is the main subject. No text, no logo, no watermark, no people. Use case: photorealistic-natural. Generate an illustrative residential glass roof, no specific brand/model. Modest small courtyard covered by a practical slightly sloped glazed canopy on slim dark aluminum beams with plausible connections to the house wall and posts. Seen from beneath at a gentle upward angle: roof occupies upper two-thirds; bright sky and softened leafy shadows visible through clear glass, warm ivory wall, minimal pale stone bench, olive plant at the edge. Slim beams and a few large glass panes, realistic supported span, believable drainage edge. Landscape 16:9 photograph. Avoid domes, atriums, skyscrapers, impossible unsupported glass, extra buildings, overly luxury furnishings."
+    }
+  ]
+}

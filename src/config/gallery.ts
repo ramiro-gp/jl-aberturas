@@ -1,15 +1,15 @@
-import ventanas from '../assets/products/ventanas.jpg';
-import corredizas from '../assets/products/corredizas.jpg';
-import mamparas from '../assets/products/mamparas.jpg';
+import estar from '../assets/gallery/estar-corrediza.webp';
+import acceso from '../assets/gallery/acceso-puerta.webp';
+import bano from '../assets/gallery/bano-mampara.webp';
 
-// Reference images only. Replace with authorized client images and accurate captions.
+// AI visualizations based on client references, never presented as completed work.
 export const gallery = {
   illustrative: true,
   heading: 'Una mirada a los espacios.',
-  intro: 'Tres referencias para imaginar tu espacio. Las opciones se definen según cada proyecto.',
+  intro: 'Los productos, en contexto. Tres ambientes para imaginar cómo podrían acompañar tu espacio.',
   images: [
-    { image: ventanas, caption: 'Luz en cada ambiente', alt: 'Imagen ilustrativa de un ambiente con ventanas amplias.', ratio: '4 / 5', position: 'left center' },
-    { image: corredizas, caption: 'Interior y exterior', alt: 'Imagen ilustrativa de un ambiente conectado con un patio mediante puertas corredizas.', ratio: '4 / 3', position: 'center' },
-    { image: mamparas, caption: 'Vidrio para el baño', alt: 'Imagen ilustrativa de una mampara de baño en un espacio de tonos cálidos.', ratio: '4 / 3', position: 'center' },
+    { image: estar, caption: 'Interior y exterior, conectados', alt: 'Visualización con IA de un estar cálido conectado a un patio mediante una corrediza blanca de dos hojas.', ratio: '4 / 5', position: 'center' },
+    { image: acceso, caption: 'Una entrada para tu espacio', alt: 'Visualización con IA de un acceso residencial con puerta blanca de paneles horizontales.', ratio: '4 / 3', position: 'center' },
+    { image: bano, caption: 'Vidrio que deja pasar la luz', alt: 'Visualización con IA de un baño de tonos cálidos con mampara fija transparente y perfil plateado.', ratio: '4 / 3', position: 'center' },
   ],
 };

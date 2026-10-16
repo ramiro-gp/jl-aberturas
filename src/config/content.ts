@@ -1,8 +1,23 @@
-import ventanales from "../assets/products/ventanales.jpg";
-import ventanas from "../assets/products/ventanas.jpg";
-import corredizas from "../assets/products/corredizas.jpg";
-import mamparas from "../assets/products/mamparas.jpg";
-import techosVidrio from "../assets/products/techos-vidrio.webp";
+import type { ImageMetadata } from 'astro';
+import corrediza from '../assets/catalog/corrediza-blanca.webp';
+import ventana from '../assets/catalog/ventana-abrir.webp';
+import ventiluz from '../assets/catalog/ventiluz-negro.webp';
+import puerta from '../assets/catalog/puerta-blanca.webp';
+import mampara from '../assets/catalog/mampara.webp';
+import techo from '../assets/gallery/techo-residencial.webp';
+
+export interface ProductView {
+  label: string;
+  image: ImageMetadata;
+  alt: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  views: readonly ProductView[];
+}
 
 export const navigation = [
   { label: "Productos", href: "#productos" },
@@ -23,7 +38,7 @@ export const copy = {
     headingFirst: "Aberturas para",
     headingSecond: "cada espacio.",
     intro:
-      "Fabricamos ventanas, ventanales y puertas corredizas de aluminio a medida para viviendas y obras. También evaluamos tu proyecto de mamparas y techos de vidrio. Coordinamos la instalación en CABA y GBA.",
+      "Ventanas, ventanales, corredizas y puertas de aluminio a medida. También evaluamos proyectos de mamparas y techos de vidrio. Te asesoramos y coordinamos la instalación en CABA y GBA.",
     customHeading: "Aberturas a medida",
     customDescription:
       "Cada espacio tiene sus medidas. Contanos tu idea y definimos juntos la abertura que necesitás.",
@@ -43,48 +58,42 @@ export const copy = {
   },
 } as const;
 
-export const products = [
+export const products: readonly Product[] = [
   {
-    name: "Ventanales",
-    description: "Ventanales a medida para conectar tus ambientes con el exterior. Evaluamos las medidas, la línea y el vidrio para tu proyecto.",
-    image: ventanales,
-    alt: "Ventanales de referencia que conectan un ambiente con el exterior.",
-    className: "product-large",
-    position: "center",
+    id: 'corredizas',
+    name: 'Ventanales y corredizas',
+    description: 'Luz, amplitud y conexión con el exterior. Definimos las medidas, la línea y el vidrio según tu espacio.',
+    views: [{ label: 'Corrediza de dos hojas', image: corrediza, alt: 'Referencia de una corrediza blanca de dos hojas vidriadas, con tiradores negros.' }],
   },
   {
-    name: "Ventanas",
-    description: "Ventanas a medida para construir o renovar. Te asesoramos sobre las líneas Módena y A30 NEW y las opciones de vidrio.",
-    image: ventanas,
-    alt: "Ventanas de referencia en un ambiente iluminado por luz natural.",
-    className: "product-small",
-    position: "left center",
+    id: 'ventanas',
+    name: 'Ventanas',
+    description: 'Distintas formas de abrir y ventilar. Te ayudamos a elegir la tipología, la línea y el vidrio para construir o renovar.',
+    views: [
+      { label: 'De abrir', image: ventana, alt: 'Referencia de una ventana de abrir blanca, con manija negra a la izquierda.' },
+      { label: 'Ventiluz', image: ventiluz, alt: 'Referencia de un ventiluz negro abierto, con brazo de empuje central.' },
+    ],
   },
   {
-    name: "Puertas corredizas",
-    description: "Puertas corredizas a medida para comunicar ambientes y patios. Consultanos por fabricación, venta y colocación.",
-    image: corredizas,
-    alt: "Puertas corredizas de referencia que conectan un ambiente con un patio.",
-    className: "product-wide",
-    position: "center",
+    id: 'puertas',
+    name: 'Puertas de aluminio',
+    description: 'Una entrada pensada para tu proyecto. Evaluamos las medidas, la terminación y el sentido de apertura.',
+    views: [{ label: 'Puerta de aluminio', image: puerta, alt: 'Referencia de una puerta blanca de aluminio con paneles horizontales y manija blanca.' }],
   },
   {
-    name: "Mamparas de baño",
-    description: "Mamparas de baño para delimitar el espacio de ducha. Compartinos las medidas o una foto para evaluar tu consulta.",
-    image: mamparas,
-    alt: "Imagen ilustrativa de una mampara de baño de vidrio.",
-    className: "product-small",
-    position: "center",
+    id: 'mamparas',
+    name: 'Mamparas de baño',
+    description: 'Vidrio para delimitar la ducha y conservar la luz. Compartinos una foto o las medidas para evaluar tu consulta.',
+    views: [{ label: 'Mampara fija', image: mampara, alt: 'Referencia de una mampara fija transparente, con perfil lateral plateado y plato de ducha blanco.' }],
   },
-  {
-    name: "Techos de vidrio",
-    description: "Techos de vidrio para incorporar luz desde arriba. Contanos cómo es el espacio y evaluamos la propuesta para tu proyecto.",
-    image: techosVidrio,
-    alt: "Imagen ilustrativa de un atrio con cubierta de vidrio y estructura visible.",
-    className: "product-roof",
-    position: "center",
-  },
-] as const;
+];
+
+export const roofProduct = {
+  name: 'Techos de vidrio',
+  description: 'Luz natural desde arriba. Contanos cómo es tu patio o el espacio que querés cubrir y evaluamos una propuesta para tu proyecto.',
+  image: techo,
+  alt: 'Visualización ilustrativa de un patio residencial con cubierta de vidrio y estructura oscura.',
+};
 
 export const steps = [
   {
@@ -121,9 +130,10 @@ export const productLines = [
 ] as const;
 
 export const glassTypes = [
-  { name: "Vidrio float", description: "Vidrio plano simple. Evaluamos el espesor y su uso según la abertura y el espacio." },
-  { name: "Vidrio DVH", description: "Doble vidriado hermético: dos vidrios separados por una cámara sellada que ayuda al aislamiento térmico. Su desempeño depende de la composición elegida." },
-  { name: "Vidrio laminado", description: "Dos o más vidrios unidos por una lámina intermedia que ayuda a retener los fragmentos ante una rotura. Evaluamos su composición según el proyecto." },
+  { kind: 'float', name: 'Vidrio float', detail: 'Un panel de vidrio', description: 'Vidrio plano simple y transparente. El espesor se elige según las medidas, la abertura y el lugar de uso.' },
+  { kind: 'dvh', name: 'Vidrio DVH', detail: 'Dos paneles · cámara sellada', description: 'Doble vidriado hermético: dos vidrios separados por una cámara sellada que ayuda al aislamiento térmico. Su desempeño depende de la composición.' },
+  { kind: 'laminado', name: 'Vidrio laminado', detail: 'Vidrio · lámina intermedia · vidrio', description: 'Dos o más vidrios unidos por una lámina intermedia que ayuda a retener los fragmentos ante una rotura. Evaluamos la composición según el proyecto.' },
+  { kind: 'templado', name: 'Vidrio templado', detail: 'Vidrio con tratamiento térmico', description: 'Vidrio tratado térmicamente para aumentar su resistencia. Su elección y espesor se evalúan según la aplicación y el espacio.' },
 ] as const;
 export const accessories = ["Mosquiteros", "Premarcos", "Tapajuntas"] as const;
 

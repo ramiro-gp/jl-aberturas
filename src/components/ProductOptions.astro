@@ -2,6 +2,7 @@
 import { MoveRight } from '@lucide/astro';
 import { productLines, glassTypes, accessories } from '../config/content';
 import WhatsAppLink from './WhatsAppLink.astro';
+import GlassDiagram from './GlassDiagram.astro';
 ---
 <div class="product-options">
   <div class="options-heading" data-reveal><p class="eyebrow">Elegí la línea para tu proyecto</p><h3>Líneas de aberturas.</h3><p>Te asesoramos para definir la opción, las medidas y el vidrio.</p></div>
@@ -14,8 +15,15 @@ import WhatsAppLink from './WhatsAppLink.astro';
   </div>
   <p class="recambio-note" data-reveal>Evaluamos el marco existente para definir si el recambio puede hacerse sin obra.</p>
   <div class="options-bottom">
-    <div data-reveal><p class="eyebrow">El vidrio también se elige</p><h3>Tipos de vidrio</h3><ul class="glass-options">{glassTypes.map(type => <li><h4>{type.name}</h4><p>{type.description}</p></li>)}</ul></div>
-    <div data-reveal><p class="eyebrow">Complementos opcionales</p><h3>Detalles que completan</h3><ul class="option-names">{accessories.map(item => <li>{item}</li>)}</ul></div>
+    <div class="glass-heading" data-reveal><p class="eyebrow">El vidrio también se elige</p><h3>Tipos de vidrio</h3><p>Una composición para cada necesidad. Te asesoramos para elegirla.</p></div>
+    <ul class="glass-options">
+      {glassTypes.map((type, index) => <li class="glass-card" data-reveal>
+        <div class="glass-visual"><span class="glass-index" aria-hidden="true">0{index + 1}</span><GlassDiagram kind={type.kind} /><span class="glass-detail">{type.detail}</span></div>
+        <div class="glass-copy"><h4>{type.name}</h4><p>{type.description}</p></div>
+      </li>)}
+    </ul>
+    <p class="glass-composition-note" data-reveal>Estas opciones pueden combinarse: un DVH puede incorporar vidrio laminado o templado. La composición y los espesores se evalúan según el proyecto.</p>
+    <div class="accessories" data-reveal><div><p class="eyebrow">Complementos opcionales</p><h3>Detalles que completan</h3></div><ul class="option-names">{accessories.map(item => <li>{item}</li>)}</ul></div>
   </div>
   <div class="product-consultation" data-reveal>
     <div><p class="eyebrow">Te asesoramos</p><h3>Elegimos la opción para tu espacio.</h3><p>Contanos qué necesitás y evaluamos juntos la línea, el vidrio y la colocación.</p></div>
